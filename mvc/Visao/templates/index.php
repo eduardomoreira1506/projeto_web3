@@ -5,12 +5,46 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<?= URL_CSS . 'bootstrap.min.css' ?>">
-    <link rel="stylesheet" href="<?= URL_CSS . 'geral.css' ?>">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin|Modak|Noto+Sans+KR" rel="stylesheet">
+    <link href="<?= URL_CSS . 'geral.css' ?>" rel="stylesheet">
 </head>
 <body>
-
-<?php $this->imprimirConteudo() ?>
-
+<header>
+	<div class="larguraCabecalho">
+		<div class="paiTitulo">
+			<h1>Votações</h1>
+		</div>
+		<div class="paiMenu">
+			<a href="#">Entrar</a>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<?php $this->imprimirConteudo() ?>
+</div>
+<section class="login">
+	<div class="row tamanhoTotal">
+		<div class="col-md-8 tamanhoTotal">
+			<div class="textosBoasVindas">
+				<h3>Bem</h3>
+				<h3>vindo</h3>
+				<h4>Você está no sistema de votações dos países.</h4>
+			</div>
+		</div>
+		<div class="col-md-4 tamanhoTotal">
+			<div class="formulario">
+				<form action="">
+					<input type="text" placeholder="email">
+					<input type="password" placeholder="senha">
+					<button type="submit">Entrar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<footer>
+	<h3>© Copyright 2019 Antonio Eduardo Moreira</h3>
+</footer>
 </body>
 </html>

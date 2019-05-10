@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Maio-2019 às 21:19
+-- Generation Time: 10-Maio-2019 às 22:02
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 5.6.40
 
@@ -33,7 +33,8 @@ CREATE TABLE `comentarios` (
   `id_deputado` int(11) DEFAULT NULL,
   `id_presidente` int(11) DEFAULT NULL,
   `id_projeto` int(11) DEFAULT NULL,
-  `comentario` varchar(255) NOT NULL
+  `comentario` varchar(255) NOT NULL,
+  `data_comentario` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

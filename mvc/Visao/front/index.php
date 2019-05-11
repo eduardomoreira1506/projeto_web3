@@ -188,7 +188,7 @@
 			<div class="col-md-6">
 				<div class="larguraVotos">
 					<h3>10 votos deferidos</h3>
-					<button><i class="fas fa-thumbs-up"></i>Deferir</button>
+					<button><i class="fas fa-thumbs-up"></i><h2>Deferir</h2></button>
 				</div>
 			</div>
 			<div class="col-md-6">

@@ -292,3 +292,122 @@ footer{
 		margin: 0;
 		font-size: 23px;
 	}
+
+.noticia{
+
+}
+	.noticia .titulo{
+		text-align: center;
+	}
+		.noticia .titulo h2{
+			font-size: 55px;
+			font-weight: 900;
+			margin: 0;
+		}
+		.noticia .titulo h3{
+
+		}
+	.noticia .imagemDestaque{
+
+	}
+		.noticia .imagemDestaque figure{
+
+		}
+			.noticia .imagemDestaque figure img{
+				display: block;
+				margin: 0 auto;
+				margin-top: 25px;
+			}
+	.noticia .informacoesProjeto{
+		margin-top: 10px;
+	}
+		.noticia .informacoesProjeto figure{
+			display: inline-block;
+		}
+			.noticia .informacoesProjeto figure img{
+				width: 85px;
+			}
+		.noticia .informacoesProjeto ul{
+			display: inline-block;
+			margin-left: 20px;
+    		border-left: solid 1px #000000;
+    		padding-left: 13px;
+		}
+			.noticia .informacoesProjeto ul li{
+
+			}
+	.noticia .descricaoProjeto{
+
+	}
+		.noticia .descricaoProjeto p{
+
+		}
+	.noticia .votos{
+
+	}
+		.noticia .votos .larguraVotos{
+
+		}
+			.noticia .votos .larguraVotos h3{
+
+			}
+			.noticia .votos .larguraVotos button{
+
+			}
+				.noticia .votos .larguraVotos button i{
+
+				}
+				.noticia .votos .larguraVotos button h2{
+
+				}
+			.noticia .votos .larguraVotos i{
+
+			}
+	.noticia .comentarios{
+
+	}
+		.noticia .comentarios .comentar{
+
+		}
+			.noticia .comentarios .comentar .topoComentarios{
+
+			}
+				.noticia .comentarios .comentar .topoComentarios .quantidadeComentarios{
+
+				}
+				.noticia .comentarios .comentar .topoComentarios a{
+
+				}
+				.noticia .comentarios .comentar .topoComentarios .nomeUsuarioLogado{
+
+				}
+			.noticia .comentarios .comentar .formularioComentario{
+
+			}
+				.noticia .comentarios .comentar .formularioComentario form{
+
+				}
+					.noticia .comentarios .comentar .formularioComentario form textarea{
+
+					}
+					.noticia .comentarios .comentar .formularioComentario form button{
+
+					}
+		.noticia .comentarios .comentariosLista{
+
+		}
+			.noticia .comentarios .comentariosLista ul{
+
+			}
+				.noticia .comentarios .comentariosLista ul li{
+
+				}
+					.noticia .comentarios .comentariosLista ul li .topoComentariolista{
+
+					}
+						.noticia .comentarios .comentariosLista ul li .topoComentariolista h2{
+
+						}
+						.noticia .comentarios .comentariosLista ul li .topoComentariolista p{
+
+						}

@@ -25,7 +25,7 @@
 <div class="container">
 	<?php $this->imprimirConteudo() ?>
 </div>
-<section class="login">
+<section class="login" style="display: none">
 	<div class="row tamanhoTotal">
 		<div class="col-md-8 tamanhoTotal">
 			<div class="textosBoasVindas">

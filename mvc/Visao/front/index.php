@@ -1,4 +1,4 @@
-<section class="alturaNoticiasDestacadas">
+<section class="alturaNoticiasDestacadas" style="display: none">
 	<div class="destaque">
 		<div class="row destaque">
 			<div class="col-md-5 destaque">
@@ -66,7 +66,7 @@
 		</div>
 	</div>
 </section>
-<section class="noticiasVariadas">
+<section class="noticiasVariadas" style="display: none">
 	<ul class="larguraListaNoticias">
 		<a href="#">
 			<li class="itemLista">
@@ -160,7 +160,7 @@
 		</a>
 	</ul>
 </section>
-<section class="noticia">
+<section class="noticia" style="display: none">
 	<div class="titulo">
 		<h2>Nome da notícia aqui</h2>
 		<h3>Data e hora aqui</h3>
@@ -203,13 +203,17 @@
 		<div class="comentar">
 			<div class="topoComentario">
 				<h2 class="quantidadeComentarios">5 comentário (s)</h2>
-				<a href="#">Entrar</a>
-				<h2 class="nomeUsuarioLogado">Nome pessoa aqui</h2>
+				<div class="parteDireita">
+					<a href="#">Entrar</a>
+					<h2 class="nomeUsuarioLogado">Nome pessoa aqui</h2>
+				</div>
 			</div>
 			<div class="formularioComentario">
 				<form action="#">
 					<textarea name="" id="" cols="30" rows="10"></textarea>
-					<button>Comentar</button>
+					<div class="botaoFormulario">
+						<button>Comentar</button>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -253,5 +257,189 @@
 				</li>
 			</ul>
 		</div>
+	</div>
+</section>
+<section class="paises" style="display: none">
+	<div class="titulo">
+		<h2>Qual país você deseja ver as notícias?</h2>
+	</div>
+	<div class="areaPaises">
+		<ul>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pais">
+						<a href="#">
+							<li></li>
+							<h3>Brasil</h3>
+						</a>
+					</div>
+				</div>
+			</div>
+		</ul>
+	</div>
+</section>
+<section class="menu" style="display: none">
+	<div class="frase">
+		<h2>Olá, Eduardo</h2>
+		<h3>Domingo 12 de Maio de 2019</h3>
+	</div>
+	<div class="opcoes row">
+		<a href="#">
+			<div>
+				<i class="fas fa-signal"></i>
+				<h4>Nome aqui</h4>
+			</div>
+		</a>
+		<a href="#">
+			<div>
+				<i class="fas fa-signal"></i>
+				<h4>Nome aqui</h4>
+			</div>
+		</a>
+		<a href="#">
+			<div>
+				<i class="fas fa-signal"></i>
+				<h4>Nome aqui</h4>
+			</div>
+		</a>
+		<a href="#">
+			<div>
+				<i class="fas fa-signal"></i>
+				<h4>Nome aqui</h4>
+			</div>
+		</a>
+	</div>
+</section>
+<section class="novo-pais" style="display: none">
+	<div class="texto">
+		<h2>Novo país</h2>
+	</div>
+	<div class="formulario">
+		<form action="#">
+			<input type="text" placeholder="nome do país">
+			<input type="text" placeholder="sigla">
+			<input type="file">
+			<button type="submit">Criar</button>
+		</form>
+		<form action="">
+			<input type="text" placeholder="nome">
+			<input type="email" placeholder="email">
+			<input type="password" placeholder="senha">
+			<button type="submit">Criar</button>
+		</form>
+	</div>
+</section>
+<section class="novo-projeto" style="display: none">
+	<div class="texto">
+		<h2>Novo projeto</h2>
+	</div>
+	<div class="formulario">
+		<form action="#">
+			<input type="text" placeholder="titulo do projeto">
+			<input type="file">
+			<textarea></textarea>
+			<button type="submit">Criar</button>
+		</form>
+	</div>
+</section>
+<section class="novo-deputado" style="display: block">
+	<div class="texto">
+		<h2>Novo deputado</h2>
+	</div>
+	<div class="formulario">
+		<form action="">
+			<input type="text" placeholder="nome">
+			<input type="email" placeholder="email">
+			<input type="password" placeholder="senha">
+			<button type="submit">Criar</button>
+		</form>
 	</div>
 </section>

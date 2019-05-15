@@ -7,6 +7,29 @@ a:hover{
 	text-decoration: none;
 }
 
+.link-novo-pais{
+	color: #0a0926;
+	font-size: 31px;
+	display: table;
+	margin: 0 auto;
+	padding: 21px 0 0 0;
+	border-bottom: 1px solid transparent;
+}
+
+.link-novo-pais:focus{
+	color: #0a0926;
+	font-size: 31px;
+	display: table;
+	margin: 0 auto;
+	padding: 21px 0 0 0;
+	border-bottom: 1px solid transparent;
+}
+
+.link-novo-pais:hover{
+	color: #0a0926;
+	border-bottom: 1px solid #0a0926;
+}
+
 ul{
 	list-style: none;
 	padding: 0;
@@ -287,6 +310,7 @@ header{
 	width: 100%;
 }
 footer{
+	margin-top: 32px;
     width: 100%;
     background: #0A0926;
     color: #fff;
@@ -536,8 +560,6 @@ footer{
 				}
 					.paises .areaPaises ul a li{
 						display: inline-block;
-						background: url('../img/imagem.jpg');
-						background-size: cover;
 						width: 363px;
 						height: 200px;
 					}

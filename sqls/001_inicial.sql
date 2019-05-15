@@ -4,7 +4,6 @@ CREATE TABLE paises(
 	id_pais INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	id_presidente INT,
 	nome varchar(255) NOT NULL,
-	bandeira varchar(255),
 	sigla varchar(10)
 ) ENGINE = MyISAM;
 
@@ -47,7 +46,8 @@ CREATE TABLE comentarios(
 	id_deputado INT,
 	id_presidente INT,
 	id_projeto INT,
-	comentario varchar(255) NOT NULL
+	comentario varchar(255) NOT NULL,
+	data_comentario DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE paises ADD FOREIGN KEY (id_presidente) REFERENCES presidentes(id_presidente);

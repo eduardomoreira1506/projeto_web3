@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Maio-2019 às 22:02
+-- Generation Time: 15-Maio-2019 às 04:21
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 5.6.40
 
@@ -61,9 +61,17 @@ CREATE TABLE `paises` (
   `id_pais` int(11) NOT NULL,
   `id_presidente` int(11) DEFAULT NULL,
   `nome` varchar(255) NOT NULL,
-  `bandeira` varchar(255) DEFAULT NULL,
   `sigla` varchar(10) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `paises`
+--
+
+INSERT INTO `paises` (`id_pais`, `id_presidente`, `nome`, `sigla`) VALUES
+(3, 4, 'Brasil', 'BR'),
+(4, 5, 'Estados Unidos', 'US'),
+(5, 6, 'Peru', 'PR');
 
 -- --------------------------------------------------------
 
@@ -78,6 +86,15 @@ CREATE TABLE `presidentes` (
   `senha` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `presidentes`
+--
+
+INSERT INTO `presidentes` (`id_presidente`, `nome`, `email`, `senha`) VALUES
+(4, 'Eduardo Moreira', 'contato@eduardoem.com.br', '$2y$10$uZfudAja4LgJrbeNcSx3AuDEtKJ6h58E3xh6e62OhPM/WsS7Rjpr.'),
+(5, 'Donald Trump', 'trump@teste.com', '$2y$10$h9SaqRm9BcELsHyMUDh37e8ecgR5idpfWgLCmX48KAD2mcB0uPWVq'),
+(6, 'Presidente do Peru', 'peru@teste.com', '$2y$10$RLDME5HI8e6BrwMmpqPF9.QPYAlpi4zzzdA6/ax4EmmJWwtRUjd.O');
+
 -- --------------------------------------------------------
 
 --
@@ -91,7 +108,7 @@ CREATE TABLE `projetos` (
   `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int(11) DEFAULT '0',
   `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
+  `descricao` text,
   `imagem` varchar(255) NOT NULL,
   `data_resultado` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -177,13 +194,13 @@ ALTER TABLE `deputados`
 -- AUTO_INCREMENT for table `paises`
 --
 ALTER TABLE `paises`
-  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `presidentes`
 --
 ALTER TABLE `presidentes`
-  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `projetos`

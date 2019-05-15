@@ -9,8 +9,8 @@
 					<?php foreach ($paises as $pais): ?>
 						<div class="col-md-4">
 							<div class="pais">
-								<a href="#">
-									<li style="background: url(<?= URL_IMG. $pais->getIdPais() ?>.png); background-size: cover;"></li>
+								<a href="<?= URL_RAIZ . 'pais/' . $pais->getIdPais() ?>">
+									<li style="background: url(<?= URL_IMG. 'bandeiras/' .$pais->getIdPais() ?>.png); background-size: cover;"></li>
 									<h3><?= $pais->getNome(); ?> - <?= $pais->getSigla(); ?></h3>
 								</a>
 							</div>

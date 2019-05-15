@@ -1,26 +1,26 @@
 <div class="container">
 	<section class="noticia">
 		<div class="titulo">
-			<h2>Nome da notícia aqui</h2>
-			<h3>Data e hora aqui</h3>
+			<h2><?= $projeto->getTitulo(); ?></h2>
+			<h3><?= $projeto->getDataCriacao(); ?></h3>
 		</div>
 		<div class="imagemDestaque">
 			<figure>
-				<img src="<?= URL_IMG.'brasil.jpg' ?>" alt="">
+				<img src="<?= URL_IMG . 'projetos/' . $projeto->getIdProjeto() . '.png' ?>" alt="">
 			</figure>
 		</div>
 		<div class="informacoesProjeto">
 			<figure>
-				<img src="<?= URL_IMG.'brasil.jpg' ?>" alt="">
+				<img src="<?= URL_IMG.'bandeiras/' . $projeto->getIdPais() . '.png' ?>" alt="">
 			</figure>
 			<ul>
-				<li>Nome do país</li>
-				<li>Nome do presidente</li>
-				<li>Status do Projeto</li>
+				<li><?= $projeto->getPais()->getNome() ?></li>
+				<li><?= $projeto->getPais()->getPresidente()->getNome() ?></li>
+				<li><?= $projeto->getStatus() ?></li>
 			</ul>
 		</div>
 		<div class="descricaoProjeto">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
+			<p><?= $projeto->getDescricao() ?></p>
 		</div>
 		<div class="votos">
 			<div class="row">

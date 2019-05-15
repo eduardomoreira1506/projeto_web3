@@ -9,23 +9,27 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Franklin|Modak|Noto+Sans+KR" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <link href="<?= URL_CSS . 'geral.css' ?>" rel="stylesheet">
     <script>
     	let baseUrl = '<?= URL_RAIZ ?>';
     </script>
 </head>
 <body>
-<header>
-	<div class="larguraCabecalho">
-		<div class="paiTitulo">
-			<h1>Votações</h1>
-		</div>
-		<div class="paiMenu">
-			<a href="#">Entrar</a>
-			<a href="#">Painel</a>
-		</div>
-	</div>
+    <header>
+       <div class="larguraCabecalho">
+          <div class="paiTitulo">
+             <h1>Votações</h1>
+         </div>
+         <div class="paiMenu">
+            <?php if($logado){ ?>
+                <a href="<?= URL_RAIZ . 'painel' ?>">Painel</a>
+                <a href="<?= URL_RAIZ . 'sair' ?>">Sair</a>
+            <?php }else{ ?>
+                <a href="<?= URL_RAIZ . 'login' ?>">Entrar</a>
+            <?php } ?>
+        </div>
+    </div>
 </header>
 <?php $this->imprimirConteudo() ?>
 <footer>

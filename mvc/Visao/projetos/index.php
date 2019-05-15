@@ -69,96 +69,23 @@
 	</section>
 	<section class="noticiasVariadas">
 		<ul class="larguraListaNoticias">
-			<a href="#">
-				<li class="itemLista">
-					<div class="row destaque">
-						<div class="col-md-9 destaque">
-							<h2>Onyx participa da conclusão do relatório da MP da reforma administrativa</h2>
-							<h3><img src="<?= URL_IMG.'brasil.jpg' ?>" alt=""> 3 horas atrás</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
-						</div>
-						<div class="col-md-3 destaque">
-							<div class="larguraImagem">
+			<?php foreach ($projetos as $projeto): ?>
+				<a href="<?= URL_RAIZ . 'projeto/' . $projeto->getIdProjeto() ?>">
+					<li class="itemLista">
+						<div class="row destaque">
+							<div class="col-md-9 destaque">
+								<h2><?= $projeto->getTitulo() ?></h2>
+								<h3><?= $projeto->getTempoFormatado() ?></h3>
+								<p><?= $projeto->getDescricao() ?></p>
+							</div>
+							<div class="col-md-3 destaque">
+								<div class="larguraImagem" style="background: url('<?= URL_IMG . 'projetos/' . $projeto->getIdProjeto() . '.png' ?>'); background-size: cover;">
+								</div>
 							</div>
 						</div>
-					</div>
-				</li>
-			</a>
-			<a href="#">
-				<li class="itemLista">
-					<div class="row destaque">
-						<div class="col-md-9 destaque">
-							<h2>Onyx participa da conclusão do relatório da MP da reforma administrativa</h2>
-							<h3><img src="<?= URL_IMG.'brasil.jpg' ?>" alt=""> 3 horas atrás</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
-						</div>
-						<div class="col-md-3 destaque">
-							<div class="larguraImagem">
-							</div>
-						</div>
-					</div>
-				</li>
-			</a>
-			<a href="#">
-				<li class="itemLista">
-					<div class="row destaque">
-						<div class="col-md-9 destaque">
-							<h2>Onyx participa da conclusão do relatório da MP da reforma administrativa</h2>
-							<h3><img src="<?= URL_IMG.'brasil.jpg' ?>" alt=""> 3 horas atrás</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
-						</div>
-						<div class="col-md-3 destaque">
-							<div class="larguraImagem">
-							</div>
-						</div>
-					</div>
-				</li>
-			</a>
-			<a href="#">
-				<li class="itemLista">
-					<div class="row destaque">
-						<div class="col-md-9 destaque">
-							<h2>Onyx participa da conclusão do relatório da MP da reforma administrativa</h2>
-							<h3><img src="<?= URL_IMG.'brasil.jpg' ?>" alt=""> 3 horas atrás</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
-						</div>
-						<div class="col-md-3 destaque">
-							<div class="larguraImagem">
-							</div>
-						</div>
-					</div>
-				</li>
-			</a>
-			<a href="#">
-				<li class="itemLista">
-					<div class="row destaque">
-						<div class="col-md-9 destaque">
-							<h2>Onyx participa da conclusão do relatório da MP da reforma administrativa</h2>
-							<h3><img src="<?= URL_IMG.'brasil.jpg' ?>" alt=""> 3 horas atrás</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
-						</div>
-						<div class="col-md-3 destaque">
-							<div class="larguraImagem">
-							</div>
-						</div>
-					</div>
-				</li>
-			</a>
-			<a href="#">
-				<li class="itemLista">
-					<div class="row destaque">
-						<div class="col-md-9 destaque">
-							<h2>Onyx participa da conclusão do relatório da MP da reforma administrativa</h2>
-							<h3><img src="<?= URL_IMG.'brasil.jpg' ?>" alt=""> 3 horas atrás</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies mauris vel justo lobortis, viverra facilisis magna pharetra. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut non tempor nibh.</p>
-						</div>
-						<div class="col-md-3 destaque">
-							<div class="larguraImagem">
-							</div>
-						</div>
-					</div>
-				</li>
-			</a>
+					</li>
+				</a>
+			<?php endforeach ?>
 		</ul>
 	</section>
 </div>

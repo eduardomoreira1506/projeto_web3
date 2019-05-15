@@ -19,6 +19,7 @@ class PaisControlador extends Controlador
 			$informacoes = [
 				'scripts' => [],
 				'paises' => $paises,
+				'logado' => $logado,
 			];
 
 			$this->visao('paises/index.php', $informacoes);
@@ -34,6 +35,7 @@ class PaisControlador extends Controlador
 		}else{
 			$informacoes = [
 				'scripts' => ['novo-pais'],
+				'logado' => $logado,
 			];
 
 			$this->visao('paises/novo-pais.php', $informacoes);
@@ -42,17 +44,14 @@ class PaisControlador extends Controlador
 
 	public function verificarPaisExiste()
 	{
-		$nomePais = $_POST['nomePais'];
-		$sigla = $_POST['sigla'];
-
-		if($nomePais == null || $sigla == null || $nomePais == '' || $sigla == ''){
+		if($_POST['nomePais'] == null || $_POST['sigla'] == null || $_POST['nomePais'] == '' || $_POST['sigla'] == ''){
 			$resposta = ['status' => false, 'frase' => 'Campos de nome e sigla do país são obrigatórios.'];
 			echo json_encode($resposta);
-		}elseif(strlen($sigla) != 2){
+		}elseif(strlen($_POST['sigla']) != 2){
 			$resposta = ['status' => false, 'frase' => 'Sigla precisa ter duas letras.'];
 			echo json_encode($resposta);
 		}else{
-			$verificacao = Pais::paisExiste($nomePais, $sigla);
+			$verificacao = Pais::paisExiste($_POST['nomePais'], $_POST['sigla']);
 		
 			if($verificacao){
 				$resposta = ['status' => false, 'frase' => 'Um país com essa sigla ou nome já existe.'];
@@ -74,16 +73,17 @@ class PaisControlador extends Controlador
 		$senha = $_POST['senha'];
 
 		$verificacao = Pais::paisExiste($nomePais, $sigla);
+		$logado = parent::estaLogado();
 
-		if($nomePais != null && $nomePais != '' && $sigla != null && $sigla != '' && $bandeira != null && $bandeira != '' && $nomePresidente != null && $nomePresidente != '' && $email != null && $email != '' && $senha != null && $senha != '' && $verificacao == false){
+		if($nomePais != null && $nomePais != '' && $sigla != null && $sigla != '' && $bandeira != null && $bandeira != '' && $nomePresidente != null && $nomePresidente != '' && $email != null && $email != '' && $senha != null && $senha != '' && $verificacao == false && strlen($sigla) == 2 && !$logado){
 
-			$presidente = new Presidente($nomePresidente, $email, $senha);
-			$presidente->inserir();
-
-			$idPresidente = $presidente->getIdPresidente();
-			$pais = new Pais($nomePais, $sigla, $bandeira, $idPresidente);
+			$pais = new Pais($nomePais, $sigla, $bandeira);
 			$pais->inserir();
 
+			$presidente = new Presidente($nomePresidente, $email, $senha, $pais->getIdPais());
+			$presidente->inserir();
+			$idPresidente = $presidente->getIdPresidente();
+			
 			$this->redirecionar(URL_RAIZ);
 		}
 	}

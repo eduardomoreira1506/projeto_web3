@@ -33,6 +33,9 @@ $(document).ready(function(){
 								title: 'Sucesso',
 								text: resposta.frase
 							}).then(() => {
+								document.getElementById("nome-pais").readOnly = true;
+								document.getElementById("sigla").readOnly = true;
+
 								$('#verificacao-pais').remove();
 
 								var html = `

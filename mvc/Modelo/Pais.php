@@ -8,26 +8,23 @@ use \Framework\DW3ImagemUpload;
 class Pais extends Modelo
 {
     const VERIFICACAO_PAIS = 'SELECT id_pais FROM paises WHERE nome = ? OR sigla = ?';
-    const INSERIR = 'INSERT INTO paises(id_presidente,nome,sigla) VALUES (?, ?, ?)';
-    const SALVAR_IMAGEM = 'UPDATE paises SET bandeira = ? WHERE id_pais = ?';
+    const INSERIR = 'INSERT INTO paises(nome,sigla) VALUES (?, ?)';
 
     private $idPais;
-    private $idPresidente;
     private $nome;
     private $bandeira;
     private $sigla;
+    private $presidente;
 
     public function __construct(
         $nome = null,
         $sigla = null,
         $bandeira = null,
-        $idPresidente = null,
         $idPais = null
     ) {
         $this->nome = $nome;
         $this->bandeira = $bandeira;
         $this->sigla = $sigla;
-        $this->idPresidente = $idPresidente;
         $this->idPais = $idPais;
         parent::__construct('paises');
     }
@@ -47,6 +44,15 @@ class Pais extends Modelo
         return $this->idPais;
     }
 
+    public function setPresidente($presidente)
+    {
+        $this->presidente = $presidente;
+    }
+
+    public function getPresidente(){
+        return $this->presidente;
+    }
+
     public function buscarTodosPaises()
     {
         $registros = $this->buscarTodos();
@@ -56,7 +62,6 @@ class Pais extends Modelo
                 $registro['nome'],
                 $registro['sigla'],
                 null,
-                $registro['id_presidente'],
                 $registro['id_pais']
             );
         }
@@ -78,14 +83,13 @@ class Pais extends Modelo
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR);
-        $comando->bindValue(1, $this->idPresidente, PDO::PARAM_STR);
-        $comando->bindValue(2, $this->nome, PDO::PARAM_STR);
-        $comando->bindValue(3, $this->sigla, PDO::PARAM_STR);
+        $comando->bindValue(1, $this->nome, PDO::PARAM_STR);
+        $comando->bindValue(2, $this->sigla, PDO::PARAM_STR);
         $comando->execute();
         $this->idPais = DW3BancoDeDados::getPdo()->lastInsertId();
         DW3BancoDeDados::getPdo()->commit();
 
-        $caminhoCompleto = PASTA_PUBLICO . "img/{$this->idPais}.png";
+        $caminhoCompleto = PASTA_PUBLICO . "img/bandeiras/{$this->idPais}.png";
         DW3ImagemUpload::salvar($this->bandeira, $caminhoCompleto);
     }
 }

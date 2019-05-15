@@ -4,10 +4,10 @@
 			<h2>Novo deputado</h2>
 		</div>
 		<div class="formulario">
-			<form action="">
-				<input type="text" placeholder="nome">
-				<input type="email" placeholder="email">
-				<input type="password" placeholder="senha">
+			<form id="formulario-novo-deputado">
+				<input type="text" placeholder="nome" id="nome">
+				<input type="email" placeholder="email" id="email">
+				<input type="password" placeholder="senha" id="senha">
 				<button type="submit">Criar</button>
 			</form>
 		</div>

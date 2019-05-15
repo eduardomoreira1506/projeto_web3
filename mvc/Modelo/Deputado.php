@@ -4,20 +4,20 @@ namespace Modelo;
 use \PDO;
 use \Framework\DW3BancoDeDados;
 
-class Presidente extends Pessoa
+class Deputado extends Pessoa
 {
-    const INSERIR = 'INSERT INTO presidentes(id_pais,nome,email,senha) VALUES (?,?, ?, ?)';
+    const INSERIR = 'INSERT INTO deputados(id_pais,nome,email,senha) VALUES (?, ?, ?, ?)';
 
-    private $idPresidente;
+    private $idDeputado;
 
-    public function __construct($nome, $email = null, $senhaBruta = null, $idPais = null, $idPresidente = null) {
-        parent::__construct($nome, $email, $senhaBruta, $idPais, 'presidentes');
-        $this->idPresidente = $idPresidente;
+    public function __construct($nome, $email, $senhaBruta, $idPais = null, $idDeputado = null) {
+        parent::__construct($nome, $email, $senhaBruta, $idPais, 'deputados');
+        $this->idDeputado = $idDeputado;
     }
 
-    public function getIdPresidente()
+    public function getIdDeputado()
     {
-        return $this->idPresidente;
+        return $this->idDeputado;
     }
 
     public function inserir()
@@ -29,7 +29,7 @@ class Presidente extends Pessoa
         $comando->bindValue(3, $this->email, PDO::PARAM_STR);
         $comando->bindValue(4, $this->senha, PDO::PARAM_STR);
         $comando->execute();
-        $this->idPresidente = DW3BancoDeDados::getPdo()->lastInsertId();
+        $this->idDeputado = DW3BancoDeDados::getPdo()->lastInsertId();
         DW3BancoDeDados::getPdo()->commit();
     }
     

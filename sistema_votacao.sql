@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Maio-2019 às 04:21
+-- Generation Time: 16-Maio-2019 às 01:42
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 5.6.40
 
@@ -33,9 +33,9 @@ CREATE TABLE `comentarios` (
   `id_deputado` int(11) DEFAULT NULL,
   `id_presidente` int(11) DEFAULT NULL,
   `id_projeto` int(11) DEFAULT NULL,
-  `comentario` varchar(255) NOT NULL,
+  `comentario` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `data_comentario` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -46,10 +46,17 @@ CREATE TABLE `comentarios` (
 CREATE TABLE `deputados` (
   `id_deputado` int(11) NOT NULL,
   `id_pais` int(11) DEFAULT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `senha` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `deputados`
+--
+
+INSERT INTO `deputados` (`id_deputado`, `id_pais`, `nome`, `email`, `senha`) VALUES
+(1, 1, 'Tiririca', 'tiririca@brasil.com', '$2y$10$88vd/aq.Fa3HQjgC8sFFQO.3Wywqdg2tiaQUMLvk0vTFV2TIe.EVi');
 
 -- --------------------------------------------------------
 
@@ -59,19 +66,18 @@ CREATE TABLE `deputados` (
 
 CREATE TABLE `paises` (
   `id_pais` int(11) NOT NULL,
-  `id_presidente` int(11) DEFAULT NULL,
-  `nome` varchar(255) NOT NULL,
-  `sigla` varchar(10) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sigla` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `paises`
 --
 
-INSERT INTO `paises` (`id_pais`, `id_presidente`, `nome`, `sigla`) VALUES
-(3, 4, 'Brasil', 'BR'),
-(4, 5, 'Estados Unidos', 'US'),
-(5, 6, 'Peru', 'PR');
+INSERT INTO `paises` (`id_pais`, `nome`, `sigla`) VALUES
+(1, 'Brasil', 'BR'),
+(2, 'Estados Unidos', 'US'),
+(3, 'Peru', 'PR');
 
 -- --------------------------------------------------------
 
@@ -81,19 +87,20 @@ INSERT INTO `paises` (`id_pais`, `id_presidente`, `nome`, `sigla`) VALUES
 
 CREATE TABLE `presidentes` (
   `id_presidente` int(11) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_pais` int(11) DEFAULT NULL,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `senha` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `presidentes`
 --
 
-INSERT INTO `presidentes` (`id_presidente`, `nome`, `email`, `senha`) VALUES
-(4, 'Eduardo Moreira', 'contato@eduardoem.com.br', '$2y$10$uZfudAja4LgJrbeNcSx3AuDEtKJ6h58E3xh6e62OhPM/WsS7Rjpr.'),
-(5, 'Donald Trump', 'trump@teste.com', '$2y$10$h9SaqRm9BcELsHyMUDh37e8ecgR5idpfWgLCmX48KAD2mcB0uPWVq'),
-(6, 'Presidente do Peru', 'peru@teste.com', '$2y$10$RLDME5HI8e6BrwMmpqPF9.QPYAlpi4zzzdA6/ax4EmmJWwtRUjd.O');
+INSERT INTO `presidentes` (`id_presidente`, `id_pais`, `nome`, `email`, `senha`) VALUES
+(1, 1, 'Bolsonaro', 'bolsonaro@brasil.com', '$2y$10$NJPajiulpF3HoWQ3tq5ghOF3BjJv0XAGpIefh/MB4rNclSBlwlRiS'),
+(2, 2, 'Trump', 'trump@eua.com', '$2y$10$OxEr9CHTjtlxXgIjF8Pbm.EUU1cvs4hHwIJIs2D8HIwhbrTgQRo6.'),
+(3, 3, 'Martín', 'martin@peru.com', '$2y$10$WYSOfnfjx4TbAj95sjUmz.0oU//YFH1BWSKKLg7sQ6OAjoMg0X5CG');
 
 -- --------------------------------------------------------
 
@@ -104,14 +111,22 @@ INSERT INTO `presidentes` (`id_presidente`, `nome`, `email`, `senha`) VALUES
 CREATE TABLE `projetos` (
   `id_projeto` int(11) NOT NULL,
   `id_deputado` int(11) DEFAULT NULL,
-  `id_presidente` int(11) DEFAULT NULL,
+  `id_pais` int(11) DEFAULT NULL,
   `data_criacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int(11) DEFAULT '0',
-  `titulo` varchar(255) NOT NULL,
-  `descricao` text,
-  `imagem` varchar(255) NOT NULL,
+  `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` text COLLATE utf8_unicode_ci,
   `data_resultado` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `projetos`
+--
+
+INSERT INTO `projetos` (`id_projeto`, `id_deputado`, `id_pais`, `data_criacao`, `status`, `titulo`, `descricao`, `data_resultado`) VALUES
+(1, 1, 1, '2019-05-15 19:33:33', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL),
+(2, 1, 1, '2019-05-15 19:33:39', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL),
+(3, 1, 1, '2019-05-15 19:34:02', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL);
 
 -- --------------------------------------------------------
 
@@ -124,7 +139,7 @@ CREATE TABLE `votos` (
   `id_projeto` int(11) DEFAULT NULL,
   `id_deputado` int(11) DEFAULT NULL,
   `aprovado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -149,14 +164,14 @@ ALTER TABLE `deputados`
 -- Indexes for table `paises`
 --
 ALTER TABLE `paises`
-  ADD PRIMARY KEY (`id_pais`),
-  ADD KEY `id_presidente` (`id_presidente`);
+  ADD PRIMARY KEY (`id_pais`);
 
 --
 -- Indexes for table `presidentes`
 --
 ALTER TABLE `presidentes`
-  ADD PRIMARY KEY (`id_presidente`);
+  ADD PRIMARY KEY (`id_presidente`),
+  ADD KEY `id_pais` (`id_pais`);
 
 --
 -- Indexes for table `projetos`
@@ -164,7 +179,7 @@ ALTER TABLE `presidentes`
 ALTER TABLE `projetos`
   ADD PRIMARY KEY (`id_projeto`),
   ADD KEY `id_deputado` (`id_deputado`),
-  ADD KEY `id_presidente` (`id_presidente`);
+  ADD KEY `id_pais` (`id_pais`);
 
 --
 -- Indexes for table `votos`
@@ -188,25 +203,25 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT for table `deputados`
 --
 ALTER TABLE `deputados`
-  MODIFY `id_deputado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_deputado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `paises`
 --
 ALTER TABLE `paises`
-  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `presidentes`
 --
 ALTER TABLE `presidentes`
-  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `votos`
@@ -227,11 +242,17 @@ ALTER TABLE `comentarios`
   ADD CONSTRAINT `comentarios_ibfk_3` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id_projeto`);
 
 --
+-- Limitadores para a tabela `presidentes`
+--
+ALTER TABLE `presidentes`
+  ADD CONSTRAINT `presidentes_ibfk_1` FOREIGN KEY (`id_pais`) REFERENCES `paises` (`id_pais`);
+
+--
 -- Limitadores para a tabela `projetos`
 --
 ALTER TABLE `projetos`
   ADD CONSTRAINT `projetos_ibfk_1` FOREIGN KEY (`id_deputado`) REFERENCES `deputados` (`id_deputado`),
-  ADD CONSTRAINT `projetos_ibfk_2` FOREIGN KEY (`id_presidente`) REFERENCES `presidentes` (`id_presidente`);
+  ADD CONSTRAINT `projetos_ibfk_2` FOREIGN KEY (`id_pais`) REFERENCES `paises` (`id_pais`);
 
 --
 -- Limitadores para a tabela `votos`

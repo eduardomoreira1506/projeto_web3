@@ -57,6 +57,15 @@ class Projeto extends Modelo
         return $this->tempoFormatado;
     }
 
+    public function getDescricaoResumida()
+    {
+        if(strlen($this->descricao) > 300){
+            return substr($this->descricao, 0, 300) . '...';
+        }
+
+        return $this->descricao;
+    }
+
     public function getDataCriacao()
     {
         return $this->dataCriacao;

@@ -119,8 +119,6 @@ header{
 			.alturaNoticiasDestacadas .destaque .alturaNoticiaMaior{
 				position: relative;
 				height: 100%;
-				background: url('../img/imagem.jpg');
-				background-size: cover;
 				border-radius: 10px;
 			}
 				.alturaNoticiasDestacadas .destaque .alturaNoticiaMaior a{
@@ -162,8 +160,6 @@ header{
 						border-radius: 10px;
 						position: relative;
 						height: 100%;
-						background: url('../img/imagem.jpg');
-						background-size: cover;
 						width: 100%;
 					}
 						.alturaNoticiasDestacadas .destaque .alturaLinhas a .noticiaMaior .informacoes, .alturaNoticiasDestacadas .destaque .primeiraLinha a .noticiaMaior .informacoes{

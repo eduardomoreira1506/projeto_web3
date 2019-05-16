@@ -19,7 +19,7 @@
     <header>
        <div class="larguraCabecalho">
           <div class="paiTitulo">
-             <h1>Votações</h1>
+             <a href="<?= URL_RAIZ ?>"><h1>Votações</h1></a>
          </div>
          <div class="paiMenu">
             <?php if($logado){ ?>

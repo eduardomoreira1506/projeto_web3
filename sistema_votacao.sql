@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 16-Maio-2019 às 01:42
+-- Generation Time: 16-Maio-2019 às 02:44
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 5.6.40
 
@@ -56,7 +56,8 @@ CREATE TABLE `deputados` (
 --
 
 INSERT INTO `deputados` (`id_deputado`, `id_pais`, `nome`, `email`, `senha`) VALUES
-(1, 1, 'Tiririca', 'tiririca@brasil.com', '$2y$10$88vd/aq.Fa3HQjgC8sFFQO.3Wywqdg2tiaQUMLvk0vTFV2TIe.EVi');
+(1, 1, 'Tiririca', 'tiririca@brasil.com', '$2y$10$88vd/aq.Fa3HQjgC8sFFQO.3Wywqdg2tiaQUMLvk0vTFV2TIe.EVi'),
+(2, 3, 'Eduardo', 'eduardo@peru.com', '$2y$10$0H4E8IEPweoCwlkeYEdK9e9k5ArFgA.sJgFrR1KeoT2Y2V9YMx8du');
 
 -- --------------------------------------------------------
 
@@ -126,7 +127,11 @@ CREATE TABLE `projetos` (
 INSERT INTO `projetos` (`id_projeto`, `id_deputado`, `id_pais`, `data_criacao`, `status`, `titulo`, `descricao`, `data_resultado`) VALUES
 (1, 1, 1, '2019-05-15 19:33:33', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL),
 (2, 1, 1, '2019-05-15 19:33:39', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL),
-(3, 1, 1, '2019-05-15 19:34:02', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL);
+(3, 1, 1, '2019-05-15 19:34:02', 0, 'Projeto de Guarapuava', 'Você já pensou em aliviar as dores do corpo e, ao mesmo tempo, praticar um dos esportes mais saudáveis do mundo? A Academia Primeiro Estilo oferece aulas de hidroterapia, que auxiliam diretamente no tratamento e no alívio de diversas dores do corpo.\r\n\r\n“A', NULL),
+(4, 2, 3, '2019-05-15 21:10:53', 0, 'Abominação do Peru', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL),
+(5, 1, 1, '2019-05-15 21:31:15', 0, 'Noite do sol', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL),
+(6, 1, 1, '2019-05-15 21:31:26', 0, 'Manha', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL),
+(7, 1, 1, '2019-05-15 21:31:38', 0, 'Madrugada', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL);
 
 -- --------------------------------------------------------
 
@@ -203,7 +208,7 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT for table `deputados`
 --
 ALTER TABLE `deputados`
-  MODIFY `id_deputado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_deputado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `paises`
@@ -221,7 +226,7 @@ ALTER TABLE `presidentes`
 -- AUTO_INCREMENT for table `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `votos`

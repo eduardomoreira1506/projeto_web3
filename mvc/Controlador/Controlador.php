@@ -36,6 +36,12 @@ class Controlador extends DW3Controlador
         return $emailSessao;
     }
 
+    protected function getNomeSessao()
+    {
+        $nomeSessao = DW3Sessao::get('nome');
+        return $nomeSessao;
+    }
+
     public function painel()
     {
         $logado = $this->estaLogado();

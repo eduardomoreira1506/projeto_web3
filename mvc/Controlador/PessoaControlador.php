@@ -27,6 +27,9 @@ class PessoaControlador extends Controlador
 	{
 		DW3Sessao::deletar('logado');
 		DW3Sessao::deletar('idPais');
+		DW3Sessao::deletar('tipo');
+		DW3Sessao::deletar('email');
+		DW3Sessao::deletar('nome');
         $this->redirecionar(URL_RAIZ);
 	}
 
@@ -93,6 +96,7 @@ class PessoaControlador extends Controlador
 					DW3Sessao::set('idPais', $pessoa->getIdPais());
 					DW3Sessao::set('tipo', $pessoa->getTipo());
 					DW3Sessao::set('email', $pessoa->getEmail());
+					DW3Sessao::set('nome', $pessoa->getNome());
 				}
 			}
 		}

@@ -44,4 +44,10 @@ $rotas = [
     '/projeto/?' => [
         'GET' => '\Controlador\ProjetoControlador#projeto',
     ],
+    '/comentario' => [
+        'POST' => '\Controlador\ProjetoControlador#comentar',
+    ],
+    '/alterarStatusProjeto' => [
+        'POST' => '\Controlador\ProjetoControlador#alterarStatusProjeto'
+    ],
 ];

@@ -3,6 +3,7 @@ namespace Controlador;
 
 use \Modelo\Pessoa;
 use \Modelo\Deputado;
+use \Modelo\Projeto;
 use \Framework\DW3Sessao;
 
 class PessoaControlador extends Controlador
@@ -163,5 +164,57 @@ class PessoaControlador extends Controlador
 		}else{
 			$this->redirecionar(URL_RAIZ);
 		}
+	}
+
+	public function votar()
+	{
+		$voto = $_POST['voto'];
+		$idProjeto = $_POST['idProjeto'];
+		$logado = parent::estaLogado();
+
+		if($logado){
+			if($voto != 1 && $voto != 0){
+				$resposta = ['status' => false, 'frase' => "As opções de voto são deferir ou indeferir!"];
+			}else{
+				$idPaisSessao = parent::getIdPaisSessao();
+				$tipo = parent::getTipoSessao();
+
+				if($tipo){
+					$email = parent::getEmailSessao();
+					$verificacaoVoto = Projeto::getVotosDeputadoProjeto($idProjeto, $email);
+					if($verificacaoVoto){
+						$resposta = ['status' => false, 'frase' => "Você já votou nesse projeto! Uma vez votado, não pode ser alterado"];
+					}else{
+						$projeto = Projeto::buscarProjeto($idProjeto);
+
+						if($projeto->getIdPais() == $idPaisSessao){
+							$registroDeputado = Pessoa::getDeputado($email);
+							$deputado = new Deputado(
+								$registroDeputado['nome'],
+								$registroDeputado['email'],
+								null,
+								$registroDeputado['id_pais'],
+								$registroDeputado['id_deputado']
+							);
+
+							$retornoVoto = $deputado->votar($voto, $idProjeto);
+							if($retornoVoto != false){
+								$resposta = ['status' => true, 'frase' => "Você foi o último voto desse projeto e ele acaba de ser $retornoVoto"];
+							}else{
+								$resposta = ['status' => true, 'frase' => "Seu voto foi contabilizado"];
+							}
+						}else{
+							$resposta = ['status' => false, 'frase' => "Você só pode votar em projetos do seu país!"];
+						}
+					}
+				}else{
+					$resposta = ['status' => false, 'frase' => "Apenas deputados podem votar!"];
+				}
+			}
+		}else{
+			$resposta = ['status' => false, 'frase' => "Você precisa estar logado como deputado do seu país para poder votar!"];
+		}
+
+		echo json_encode($resposta);
 	}
 }

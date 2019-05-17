@@ -141,7 +141,8 @@ class ProjetoControlador extends Controlador
 				'scripts' => ['projeto'],
 				'projeto' => $projeto,
 				'logado' => $logado,
-				'comentarios' => $comentarios
+				'comentarios' => $comentarios,
+				'tipo' => 1
 			];
 
 			$this->visao('projetos/projeto.php', $informacoes);

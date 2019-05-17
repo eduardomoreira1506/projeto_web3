@@ -46,7 +46,7 @@ class Comentario extends Modelo
 
         foreach ($registros as $registro) {
             if($registro['id_deputado'] != null && $registro['id_deputado'] != ""){
-                $pessoa = new Deputado() ;
+                $pessoa = new Deputado();
                 $pessoa->setIdDeputado($registro['id_deputado']);
                 $pessoa->pegarInformacoes();
             }else{

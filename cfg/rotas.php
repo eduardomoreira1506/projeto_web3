@@ -50,4 +50,7 @@ $rotas = [
     '/alterarStatusProjeto' => [
         'POST' => '\Controlador\ProjetoControlador#alterarStatusProjeto'
     ],
+    '/votar' => [
+        'POST' => '\Controlador\PessoaControlador#votar'
+    ],
 ];

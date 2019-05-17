@@ -27,6 +27,7 @@ $(document).ready(function(){
 					</li>`;
 
 					$('#lista-de-comentarios').prepend(html);
+					$('#comentario').val('');
 				}
 			}
 		});
@@ -84,7 +85,67 @@ $(document).ready(function(){
 				}
 			}
 		});
-	})
+	});
+
+	$('#deferir').click(function(){
+		$.ajax({
+			url: `${baseUrl}votar`,
+			method: 'POST',
+			data: {voto: 1, idProjeto: idProjeto},
+			success: function(respostaJson){
+				var resposta = JSON.parse(respostaJson);
+
+				if(!resposta.status){
+					Swal.fire({
+						type: 'error',
+						title: 'Oops..',
+						text: resposta.frase
+					})
+				}else{
+					Swal.fire({
+						type: 'success',
+						title: resposta.titulo,
+						text: resposta.frase
+					});
+
+					var quantidadeVotosAtuais = $('#quantidade-votos-deferidos').html();
+					quantidadeVotosAtuais = parseInt(quantidadeVotosAtuais);
+					quantidadeVotosAtuais++;
+					$('#quantidade-votos-deferidos').html(quantidadeVotosAtuais);
+				}
+			}
+		});
+	});
+
+	$('#indeferir').click(function(){
+		$.ajax({
+			url: `${baseUrl}votar`,
+			method: 'POST',
+			data: {voto: 0, idProjeto: idProjeto},
+			success: function(respostaJson){
+				var resposta = JSON.parse(respostaJson);
+
+				if(!resposta.status){
+					Swal.fire({
+						type: 'error',
+						title: 'Oops..',
+						text: resposta.frase
+					})
+				}else{
+					Swal.fire({
+						type: 'success',
+						title: resposta.titulo,
+						text: resposta.frase
+					});
+
+					var quantidadeVotosAtuais = $('#quantidade-votos-indeferidos').html();
+					quantidadeVotosAtuais = parseInt(quantidadeVotosAtuais);
+					quantidadeVotosAtuais++;
+					$('#quantidade-votos-indeferidos').html(quantidadeVotosAtuais);
+				}
+			}
+		});
+	});
 
 });
 

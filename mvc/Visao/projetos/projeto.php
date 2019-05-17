@@ -30,19 +30,19 @@
 		</div>
 		<?php if($logado){ 
 			if($tipo){ 
-				if($projeto->getStatusNumero() != 0 && $projeto->getStatusNumero() != 4){ ?>
+				if($projeto->getStatusNumero() != 0 && $projeto->getStatusNumero() != 4 && $projeto->getStatusNumero() != 5){ ?>
 					<div class="votos">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="larguraVotos">
-									<h3>10 votos deferidos</h3>
-									<button><i class="fas fa-thumbs-up"></i><h2>Deferir</h2></button>
+									<h3><span id="quantidade-votos-deferidos"><?= $projeto->getVotosAprovados(); ?></span> votos deferidos</h3>
+									<button id="deferir"><i class="fas fa-thumbs-up"></i><h2>Deferir</h2></button>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="larguraVotos">
-									<h3>10 votos indeferidos</h3>
-									<button><i class="fas fa-thumbs-down"></i><h2>Indeferir</h2></button>
+									<h3><span id="quantidade-votos-indeferidos"><?= $projeto->getVotosReprovados(); ?></span> votos indeferidos</h3>
+									<button id="indeferir"><i class="fas fa-thumbs-down"></i><h2>Indeferir</h2></button>
 								</div>
 							</div>
 						</div>
@@ -71,18 +71,20 @@
 						<h2>Aprovado:</h2>
 					<?php }elseif($projeto->getStatusNumero() == 3){ ?>
 						<h2>Reprovado:</h2>
+					<?php }elseif($projeto->getStatusNumero() == 5){ ?>
+						<h2>Empate:</h2>
 					<?php } ?>
 					<div class="votos">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="larguraVotos">
-									<h3>10 votos deferidos</h3>
+									<h3><?= $projeto->getVotosAprovados(); ?> votos deferidos</h3>
 									<i class="fas fa-thumbs-up"></i>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="larguraVotos">
-									<h3>10 votos indeferidos</h3>
+									<h3><?= $projeto->getVotosReprovados(); ?> votos indeferidos</h3>
 									<i class="fas fa-thumbs-down"></i>
 								</div>
 							</div>
@@ -91,7 +93,7 @@
 				<?php } ?>
 			<?php } ?>
 		<?php }else{ ?>
-			<?php if($projeto->getStatusNumero() != 0 && $projeto->getStatusNumero() != 4){ ?>
+			<?php if($projeto->getStatusNumero() != 0 && $projeto->getStatusNumero() != 4 && $projeto->getStatusNumero() != 5){ ?>
 				<?php if($projeto->getStatusNumero() == 1){ ?>
 					<h2>Em votação:</h2>
 				<?php }elseif($projeto->getStatusNumero() == 2){ ?>
@@ -103,13 +105,13 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="larguraVotos">
-								<h3>10 votos deferidos</h3>
+								<h3><?= $projeto->getVotosAprovados(); ?> votos deferidos</h3>
 								<i class="fas fa-thumbs-up"></i>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="larguraVotos">
-								<h3>10 votos indeferidos</h3>
+								<h3><?= $projeto->getVotosReprovados(); ?> votos indeferidos</h3>
 								<i class="fas fa-thumbs-down"></i>
 							</div>
 						</div>

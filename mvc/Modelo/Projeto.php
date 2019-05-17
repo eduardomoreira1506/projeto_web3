@@ -9,9 +9,10 @@ class Projeto extends Modelo
 {
     const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y-%H') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC";
     const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y-%H') AS horario FROM projetos ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
+    const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 1) as votos_aprovados,(SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 0) as votos_reprovados,(SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
     const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao) VALUES (?, ?,?, ?)';
     const ATUALIZAR = 'UPDATE projetos SET status = ? WHERE id_projeto = ?';
+    const BUSCAR_VOTO = 'SELECT COUNT(id_voto) as voto FROM deputados JOIN votos USING (id_deputado) WHERE id_projeto = ? AND email = ?';
 
     private $idProjeto;
     private $idDeputado;
@@ -25,6 +26,8 @@ class Projeto extends Modelo
     private $tempoFormatado;
     private $pais;
     private $quantidadeComentarios;
+    private $votosAprovados;
+    private $votosReprovados;
 
     public function __construct(
         $idProjeto = null,
@@ -35,7 +38,9 @@ class Projeto extends Modelo
         $titulo = null,
         $descricao = null,
         $imagem = null,
-        $dataResultado = null
+        $dataResultado = null,
+        $votosAprovados = null,
+        $votosReprovados = null
     ) {
         $this->idProjeto = $idProjeto;
         $this->idDeputado = $idDeputado;
@@ -46,12 +51,24 @@ class Projeto extends Modelo
         $this->descricao = $descricao;
         $this->imagem = $imagem;
         $this->dataResultado = $dataResultado;
+        $this->votosAprovados = $votosAprovados;
+        $this->votosReprovados = $votosReprovados;
         parent::__construct('projetos');
     }
 
     public function setTempoFormatado($tempoFormatado)
     {
         $this->tempoFormatado = $tempoFormatado;
+    }
+
+    public function getVotosAprovados()
+    {
+        return $this->votosAprovados;
+    }
+
+    public function getVotosReprovados()
+    {
+        return $this->votosReprovados;
     }
 
     public function getTempoFormatado()
@@ -81,6 +98,7 @@ class Projeto extends Modelo
             case 2: return "Aprovado";
             case 3: return "Reprovado";
             case 4: return "Reprovado pelo presidente";
+            case 5: return "Empatado";
         }
     }
 
@@ -144,6 +162,8 @@ class Projeto extends Modelo
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETO_PELO_ID);
         $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
         $sql->bindValue(2, $idProjeto, PDO::PARAM_INT);
+        $sql->bindValue(3, $idProjeto, PDO::PARAM_INT);
+        $sql->bindValue(4, $idProjeto, PDO::PARAM_INT);
         $sql->execute();
         $registro = $sql->fetch();
 
@@ -156,7 +176,9 @@ class Projeto extends Modelo
             $registro['titulo'],
             $registro['descricao'],
             null,
-            $registro['data_resultado']
+            $registro['data_resultado'],
+            $registro['votos_aprovados'],
+            $registro['votos_reprovados']
         );
 
         $pais = new Pais(
@@ -318,6 +340,17 @@ class Projeto extends Modelo
         $comando->bindValue(1, $status, PDO::PARAM_STR);
         $comando->bindValue(2, $idProjeto, PDO::PARAM_INT);
         $comando->execute();
+    }
+
+    public function getVotosDeputadoProjeto($idProjeto, $email)
+    {
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_VOTO);
+        $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
+        $sql->bindValue(2, $email, PDO::PARAM_INT);
+        $sql->execute();
+        $registro = $sql->fetch();
+
+        return $registro['voto'];
     }
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 17-Maio-2019 às 02:18
+-- Generation Time: 20-Maio-2019 às 00:44
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 5.6.40
 
@@ -51,7 +51,9 @@ INSERT INTO `comentarios` (`id_comentario`, `id_deputado`, `id_presidente`, `id_
 (7, NULL, 1, 1, 'dsadsa', '2019-05-16 12:10:44'),
 (8, 1, NULL, 8, 'é tiriricaaaaaa', '2019-05-16 17:49:04'),
 (9, NULL, 1, 8, 'porra tiririca teu cu viadinho!', '2019-05-16 17:50:13'),
-(10, NULL, 1, 8, 'dsadsa', '2019-05-16 19:48:36');
+(10, NULL, 1, 8, 'dsadsa', '2019-05-16 19:48:36'),
+(11, 3, NULL, 9, 'bodnsaosdnaodsa', '2019-05-16 21:40:06'),
+(12, NULL, 4, 9, 'dsadsa', '2019-05-16 21:40:42');
 
 -- --------------------------------------------------------
 
@@ -73,7 +75,10 @@ CREATE TABLE `deputados` (
 
 INSERT INTO `deputados` (`id_deputado`, `id_pais`, `nome`, `email`, `senha`) VALUES
 (1, 1, 'Tiririca', 'tiririca@brasil.com', '$2y$10$88vd/aq.Fa3HQjgC8sFFQO.3Wywqdg2tiaQUMLvk0vTFV2TIe.EVi'),
-(2, 3, 'Eduardo', 'eduardo@peru.com', '$2y$10$0H4E8IEPweoCwlkeYEdK9e9k5ArFgA.sJgFrR1KeoT2Y2V9YMx8du');
+(2, 3, 'Eduardo', 'eduardo@peru.com', '$2y$10$0H4E8IEPweoCwlkeYEdK9e9k5ArFgA.sJgFrR1KeoT2Y2V9YMx8du'),
+(3, 4, 'Bruno', 'bruno@mexico.com', '$2y$10$XgTE34QTpQWYaHb53OqAIeqnnPEm9SYsUNUzH9I1SFdTzE7W1q6/O'),
+(4, 4, 'Edu', 'edu@mexico.com', '$2y$10$T3qfhRCMOj03m2qjiuJ7TuhfHvaPaMP9wC2/UNBRwjNaAZw11M1Bi'),
+(5, 4, 'Marcio', 'marcio@mexico.com', '$2y$10$kZaMPMghfEnZxXsaP.lZb.eYkOD9IwC5S8HCJ21TA9UYbjJKAtMKG');
 
 -- --------------------------------------------------------
 
@@ -94,7 +99,8 @@ CREATE TABLE `paises` (
 INSERT INTO `paises` (`id_pais`, `nome`, `sigla`) VALUES
 (1, 'Brasil', 'BR'),
 (2, 'Estados Unidos', 'US'),
-(3, 'Peru', 'PR');
+(3, 'Peru', 'PR'),
+(4, 'Mexico', 'ME');
 
 -- --------------------------------------------------------
 
@@ -117,7 +123,8 @@ CREATE TABLE `presidentes` (
 INSERT INTO `presidentes` (`id_presidente`, `id_pais`, `nome`, `email`, `senha`) VALUES
 (1, 1, 'Bolsonaro', 'bolsonaro@brasil.com', '$2y$10$NJPajiulpF3HoWQ3tq5ghOF3BjJv0XAGpIefh/MB4rNclSBlwlRiS'),
 (2, 2, 'Trump', 'trump@eua.com', '$2y$10$OxEr9CHTjtlxXgIjF8Pbm.EUU1cvs4hHwIJIs2D8HIwhbrTgQRo6.'),
-(3, 3, 'Martín', 'martin@peru.com', '$2y$10$WYSOfnfjx4TbAj95sjUmz.0oU//YFH1BWSKKLg7sQ6OAjoMg0X5CG');
+(3, 3, 'Martín', 'martin@peru.com', '$2y$10$WYSOfnfjx4TbAj95sjUmz.0oU//YFH1BWSKKLg7sQ6OAjoMg0X5CG'),
+(4, 4, 'Andrés Manuel López Obrador', 'andres@mexico.com', '$2y$10$fDVzinwSkkM3OnJWwV82oOSCnLV9p2M9Gf7PnRxjgLCE0Nm3jejMe');
 
 -- --------------------------------------------------------
 
@@ -148,7 +155,8 @@ INSERT INTO `projetos` (`id_projeto`, `id_deputado`, `id_pais`, `data_criacao`, 
 (5, 1, 1, '2019-05-15 21:31:15', 3, 'Noite do sol', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL),
 (6, 1, 1, '2019-05-15 21:31:26', 1, 'Manha', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL),
 (7, 1, 1, '2019-05-15 21:31:38', 2, 'Madrugada', 'El juez Jorge Chávez, titular del Tercer Juzgado de Investigación Preparatoria Especializado en Delitos de Corrupción, dictó prisión preventiva por 18 meses para el exgerente municipal José Miguel Castro por los aportes ilegales de OAS y Odebrecht a la campaña por el No a la revocatoria de la entonces alcaldesa de Lima, Susana Villarán (2013), y su reelección (2014).\r\n\r\nEn la audiencia judicial, la fiscal Ángela Zuloaga dijo que el exgerente municipal amenazaba a la empresa OAS para conseguir el dinero. \"Influía miedo para sus requerimientos\", manifestó.\r\n\r\nEl representante del Ministerio Público señaló también que dicha empresa brasileña entregó 3 millones de dólares para la campaña contra la revocatoria y 4 millones para su reelección, a cambio de ser favorecida en la concesión del proyecto Línea Amarilla.\r\n\r\nEn este caso también están implicados Gabriel Prado, exgerente de Seguridad Ciudadana; Luis Ernesto Gómez Cornejo Rotalde, César Simón Meiggs Rojas y Óscar Ricardo Vidaurreta Yzaga. La Fiscalía ha solicitado para todos ellos 36 meses de prisión preventiva.\r\n\r\nA todas estas personas se les acusa de integrar una red criminal que buscaba mantener en el poder a Susana Villarán, quien habría liderado la organización, para lo cual solicitaron aportes a las compañías brasileñas, quienes posteriormente serían beneficiadas en concesiones municipales.', NULL),
-(8, 1, 1, '2019-05-16 12:51:26', 4, 'Produtos HMUL', 'HMULTI\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL', NULL);
+(8, 1, 1, '2019-05-16 12:51:26', 4, 'Produtos HMUL', 'HMULTI\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL\r\n   \r\narray(11) { [\"cpf_cnpj\"]=> string(18) \"25.114.822/0001-24\" [\"razao_social\"]=> string(42) \"LICIANNE DE CASSIA LOPES SILVA 78932203253\" [\"tel\"]=> string(14) \"(91) 9813-7607\" [\"email\"]=> string(45) \"masilva_39@hotmail.com,nana.marcoos@gmail.com\" [\"cod_iugu\"]=> string(32) \"355C57567D014008A970C6DCCE732B0B\" [\"status\"]=> string(8) \"PENDENTE\" [\"referencia\"]=> string(10) \"27/05/2017\" [\"vencimento\"]=> string(10) \"06/07/2017\" [\"nomeFantasia\"]=> string(19) \"NORTE GPS UNIVERSAL\" [\"valorTotalFatura\"]=> string(18) \"1178.0999546051025\" [\"idFatura\"]=> string(4) \"5499\" }\r\nNORTE GPS UNIVERSAL', NULL),
+(9, 3, 4, '2019-05-16 21:39:22', 2, 'Mexicooooo dsanod', 'Eleição\r\nDesde 1934, as eleições presidenciais ocorrem a cada seis anos, sendo completamente democráticas desde 1994. O presidente é eleito por sufrágio universal e direto para o mandato de seis anos conhecido popularmente como sexênio. Qualquer um dos candidatos que vencer uma simples pluralidade do voto nacional já é considerado eleito; tendo sido assim nas eleições de Carlos Salinas, Ernesto Zedillo, Vicente Fox, e Felipe Calderón. Desde a queda de Porfirio Díaz até 1929, o México não teve um sistema eleitoral democrático. Isto só se concretizou com a formação do Partido Revolucionário Institucional. Até 1988, o PRI instituiu um país unipartidário.\r\n\r\nExigências\r\nDe acordo com o Artigo nº 82 da Constituição mexicana, para se candidatar a Presidente o indivíduo necessita, entre outros:\r\n\r\nSer cidadão mexicano por nascimento e gozando de seus plenos direitos, filho de pai ou mãe mexicanos e residir no México nos últimos 20 anos;\r\nTer 35 (trinta e cinco) anos cumpridos à altura das eleições;\r\nTer residido no país no mínimo 1 ano antes do dia das eleições;\r\nNão pertencer ao clero nem ser ministro de culto;\r\nNão ocupar cargo público à época das eleições.\r\nPalácios presidenciais\r\nLos Pinos: Foi a residência oficial do presidente de 1935 a 2018, situada no centro do Bosque de Chapultepec, Cidade do México. Tornou-se a residência presidencial quando Lázaro Cárdenas recusou-se a residir no Castelo de Chapultepec, transformando este em sede do Museu Nacional de História.\r\nPalácio Nacional: É a sede do poder executivo e abriga as principais cerimônias oficias envolvendo o presidente. Foi durante o período do México colonial, a residência dos vice-reis.\r\nEx-presidentes\r\nO México possui seis ex-presidentes vivos. Os ex-presidentes permanecem com o tratamento de \"Presidente\" antes do primeiro nome e recebem uma pensão do Estado, sendo que podem a recusar. O único remanescente do governo de um ex-presidente é sua segurança, realizada pelo Estado Mayor Presidencial.', NULL);
 
 -- --------------------------------------------------------
 
@@ -171,7 +179,10 @@ INSERT INTO `votos` (`id_voto`, `id_projeto`, `id_deputado`, `aprovado`) VALUES
 (1, 7, 1, 1),
 (2, 5, 1, 0),
 (3, 1, 1, 1),
-(4, 3, 1, 1);
+(4, 3, 1, 1),
+(5, 9, 3, 1),
+(6, 9, 5, 1),
+(7, 9, 4, 0);
 
 --
 -- Indexes for dumped tables
@@ -229,37 +240,37 @@ ALTER TABLE `votos`
 -- AUTO_INCREMENT for table `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `deputados`
 --
 ALTER TABLE `deputados`
-  MODIFY `id_deputado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_deputado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `paises`
 --
 ALTER TABLE `paises`
-  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `presidentes`
 --
 ALTER TABLE `presidentes`
-  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `votos`
 --
 ALTER TABLE `votos`
-  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

@@ -19,7 +19,8 @@ $rotas = [
         'POST' => '\Controlador\PessoaControlador#verificarEmailExiste'
     ],
     '/projetos' => [
-        'GET' => '\Controlador\ProjetoControlador#index'
+        'GET' => '\Controlador\ProjetoControlador#index',
+        'POST' => '\Controlador\ProjetoControlador#paginacao'
     ],
     '/sair' => [
         'GET' => '\Controlador\PessoaControlador#logoff'

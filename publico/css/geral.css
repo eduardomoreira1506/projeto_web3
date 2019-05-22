@@ -7,6 +7,11 @@ a:hover{
 	text-decoration: none;
 }
 
+.marginTopo{
+	min-height: 100vh;
+	margin-top: 113px !important;
+}
+
 .link-novo-pais{
 	color: #0a0926;
 	font-size: 31px;
@@ -318,7 +323,7 @@ footer{
 	}
 
 .noticia{
-
+	min-height: 100vh;
 }
 	.noticia .titulo{
 		text-align: center;
@@ -529,7 +534,7 @@ footer{
 
 						}
 .paises{
-
+	min-height: 100vh;
 }
 	.paises .titulo{
 
@@ -609,6 +614,7 @@ footer{
 				padding-top: 10px;
 			}
 .novo-pais{
+	min-height: 100vh;
 	margin-top: 25px;	
 }
 	.novo-pais .texto{
@@ -658,6 +664,7 @@ footer{
 				color: #1b57a6!important;
 			}
 .novo-projeto{
+	min-height: 100vh;
 	margin-top: 25px;	
 }
 	.novo-projeto .texto{
@@ -725,6 +732,7 @@ footer{
 					color: #1b57a6!important;
 				}
 .novo-deputado{
+	min-height: 100vh;
 	margin-top: 25px;
 }
 	.novo-deputado .texto{

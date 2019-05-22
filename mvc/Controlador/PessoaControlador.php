@@ -10,7 +10,7 @@ class PessoaControlador extends Controlador
 {
 	public function login()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
 			$this->redirecionar(URL_RAIZ);
@@ -74,7 +74,7 @@ class PessoaControlador extends Controlador
 
 	public function fazerLogin()
 	{
-		$verificacao = parent::estaLogado();
+		$verificacao = $this->estaLogado();
 		$senha = $_POST['senha'];
 		
 		if(!$verificacao){
@@ -105,10 +105,10 @@ class PessoaControlador extends Controlador
 
 	public function novoDeputado()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$tipoSessao = parent::getTipoSessao();
+			$tipoSessao = $this->getTipoSessao();
 
 			if(!$tipoSessao){
 				$informacoes = [
@@ -127,10 +127,10 @@ class PessoaControlador extends Controlador
 
 	public function cadastrarNovoDeputado()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$tipoSessao = parent::getTipoSessao();
+			$tipoSessao = $this->getTipoSessao();
 
 			if(!$tipoSessao){
 				$nome = $_POST['nome'];
@@ -147,7 +147,7 @@ class PessoaControlador extends Controlador
 						$resposta = ['status' => false, 'frase' => 'Esse e-mail já está cadastrado no sistema.'];
 						echo json_encode($resposta);
 					}else{
-						$idPais = parent::getIdPaisSessao();
+						$idPais = $this->getIdPaisSessao();
 						$deputado = new Deputado($nome, $email, $senha, $idPais);
 						$deputado->inserir();
 
@@ -170,17 +170,17 @@ class PessoaControlador extends Controlador
 	{
 		$voto = $_POST['voto'];
 		$idProjeto = $_POST['idProjeto'];
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
 			if($voto != 1 && $voto != 0){
 				$resposta = ['status' => false, 'frase' => "As opções de voto são deferir ou indeferir!"];
 			}else{
-				$idPaisSessao = parent::getIdPaisSessao();
-				$tipo = parent::getTipoSessao();
+				$idPaisSessao = $this->getIdPaisSessao();
+				$tipo = $this->getTipoSessao();
 
 				if($tipo){
-					$email = parent::getEmailSessao();
+					$email = $this->getEmailSessao();
 					$verificacaoVoto = Projeto::getVotosDeputadoProjeto($idProjeto, $email);
 					if($verificacaoVoto){
 						$resposta = ['status' => false, 'frase' => "Você já votou nesse projeto! Uma vez votado, não pode ser alterado"];

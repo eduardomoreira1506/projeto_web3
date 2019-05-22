@@ -89,7 +89,7 @@
 			</div>
 		</section>
 		<section class="noticiasVariadas">
-			<ul class="larguraListaNoticias">
+			<ul class="larguraListaNoticias" id="listaProjetos">
 				<?php for($i = 5; $i < count($projetos) ; $i++){ ?>
 					<a href="<?= URL_RAIZ . 'projeto/' . $projetos[$i]->getIdProjeto() ?>">
 						<li class="itemLista">
@@ -114,8 +114,8 @@
 			</ul>
 		</section>
 	<?php }else{ ?>
-		<section class="noticiasVariadas">
-			<ul class="larguraListaNoticias">
+		<section class="noticiasVariadas marginTopo">
+			<ul class="larguraListaNoticias" id="listaProjetos">
 				<?php foreach ($projetos as $projeto): ?>
 					<a href="<?= URL_RAIZ . 'projeto/' . $projeto->getIdProjeto() ?>">
 						<li class="itemLista">

@@ -11,10 +11,10 @@ class ProjetoControlador extends Controlador
 {
 	public function index()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$idPais = parent::getIdPaisSessao();
+			$idPais = $this->getIdPaisSessao();
 			$projeto = new Projeto();
 			$projeto->setIdPais($idPais);
 
@@ -25,7 +25,7 @@ class ProjetoControlador extends Controlador
 		}
 
 		$informacoes = [
-			'scripts' => [],
+			'scripts' => ['projetos'],
 			'projetos' => $projetos,
 			'logado' => $logado,
 		];
@@ -33,9 +33,24 @@ class ProjetoControlador extends Controlador
 		$this->visao('projetos/index.php', $informacoes);
 	}
 
+	public function paginacao()
+	{
+		$logado = $this->estaLogado();
+		$paginacao = $_POST['paginacao'];
+
+		if($logado){
+			$idPaisSessao = $this->getIdPaisSessao();
+			$projetos = Projeto::buscarProjetosDoPaisPaginacao($idPaisSessao, $paginacao);
+		}else{
+			$projetos = Projeto::buscarProjetosPaginacao($paginacao);
+		}
+
+		echo json_encode($projetos);
+	}
+
 	public function filtrarPais($idPais)
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 		
 		if($logado){
 			$this->redirecionar(URL_RAIZ);
@@ -57,10 +72,10 @@ class ProjetoControlador extends Controlador
 
 	public function novoProjeto()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$tipoSessao = parent::getTipoSessao();
+			$tipoSessao = $this->getTipoSessao();
 
 			if($tipoSessao){
 				$informacoes = [
@@ -83,18 +98,18 @@ class ProjetoControlador extends Controlador
 		$imagem = array_key_exists('imagem', $_FILES) ? $_FILES['imagem'] : null;
 		$descricao = $_POST['descricao'];
 
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$tipoSessao = parent::getTipoSessao();
+			$tipoSessao = $this->getTipoSessao();
 
 			if($titulo != null && $titulo != '' && $imagem != null && $imagem != '' && $descricao != null && $descricao != ''){
-				$emailDeputado = parent::getEmailSessao();
+				$emailDeputado = $this->getEmailSessao();
 				$pessoa = Pessoa::getDeputado($emailDeputado);
 
 				$idDeputado = $pessoa['id_deputado'];
 
-				$idPais = parent::getIdPaisSessao();
+				$idPais = $this->getIdPaisSessao();
 
 				$projeto = new Projeto(null, $idDeputado, $idPais, null, null, $titulo, $descricao, $imagem);
 				$projeto->inserir();
@@ -108,12 +123,12 @@ class ProjetoControlador extends Controlador
 
 	public function projeto($idProjeto)
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$idPaisSessao = parent::getIdPaisSessao();
-			$nome = parent::getNomeSessao();
-			$tipo = parent::getTipoSessao();
+			$idPaisSessao = $this->getIdPaisSessao();
+			$nome = $this->getNomeSessao();
+			$tipo = $this->getTipoSessao();
 			$projeto = Projeto::buscarProjeto($idProjeto);
 
 			if($idPaisSessao == $projeto->getIdPais()){
@@ -154,16 +169,16 @@ class ProjetoControlador extends Controlador
 		$comentario = $_POST['comentario'];
 		$idProjeto = $_POST['idProjeto'];
 
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
-			$idPaisSessao = parent::getIdPaisSessao();
+			$idPaisSessao = $this->getIdPaisSessao();
 			$projeto = Projeto::buscarProjeto($idProjeto);
 			$idPais = $projeto->getIdPais();
 
 			if($idPaisSessao == $idPais){
-				$tipo = parent::getTipoSessao();
-				$email = parent::getEmailSessao();
+				$tipo = $this->getTipoSessao();
+				$email = $this->getEmailSessao();
 				if($tipo){
 					$deputado = Deputado::buscarDeputado($email);
 					$deputado->comentar($idProjeto, $comentario);
@@ -172,7 +187,7 @@ class ProjetoControlador extends Controlador
 					$presidente->comentar($idProjeto, $comentario);
 				}
 
-				$resposta = ['status' => true, 'nome' => parent::getNomeSessao()];
+				$resposta = ['status' => true, 'nome' => $this->getNomeSessao()];
 				echo json_encode($resposta);
 			}else{
 				$resposta = ['status' => false, 'frase' => 'Você só pode comentar em projetos do seu país!'];
@@ -189,10 +204,10 @@ class ProjetoControlador extends Controlador
 		$status = $_POST['status'];
 		$idProjeto = $_POST['idProjeto'];
 
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 		if($logado){
-			$tipo = parent::getTipoSessao();
-			$idPais = parent::getIdPaisSessao();
+			$tipo = $this->getTipoSessao();
+			$idPais = $this->getIdPaisSessao();
 
 			if($tipo){
 				$resposta = ['status' => false, 'frase' => 'Apenas presidentes podem colocar o projeto em votação!'];

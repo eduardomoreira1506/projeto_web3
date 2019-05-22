@@ -8,7 +8,7 @@ class PaisControlador extends Controlador
 {
 	public function index()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
 			$this->redirecionar(URL_RAIZ . 'projetos');
@@ -28,7 +28,7 @@ class PaisControlador extends Controlador
 
 	public function novoPais()
 	{
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($logado){
 			$this->redirecionar(URL_RAIZ . 'projetos');
@@ -73,7 +73,7 @@ class PaisControlador extends Controlador
 		$senha = $_POST['senha'];
 
 		$verificacao = Pais::paisExiste($nomePais, $sigla);
-		$logado = parent::estaLogado();
+		$logado = $this->estaLogado();
 
 		if($nomePais != null && $nomePais != '' && $sigla != null && $sigla != '' && $bandeira != null && $bandeira != '' && $nomePresidente != null && $nomePresidente != '' && $email != null && $email != '' && $senha != null && $senha != '' && $verificacao == false && strlen($sigla) == 2 && !$logado){
 

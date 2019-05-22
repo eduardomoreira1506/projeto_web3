@@ -15,7 +15,7 @@
     	let baseUrl = '<?= URL_RAIZ ?>';
     </script>
 </head>
-<body>
+<body id="alturaTela">
     <header>
        <div class="larguraCabecalho">
           <div class="paiTitulo">

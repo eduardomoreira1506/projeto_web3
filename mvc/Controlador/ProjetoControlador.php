@@ -48,6 +48,21 @@ class ProjetoControlador extends Controlador
 		echo json_encode($projetos);
 	}
 
+	public function buscar()
+	{
+		$logado = $this->estaLogado();
+		$palavraChave = $_POST['palavraChave'];
+
+		if($logado){
+			$idPaisSessao = $this->getIdPaisSessao();
+			$projetos = Projeto::buscarProjetosDoPaisPalavraChave($idPaisSessao, $palavraChave);
+		}else{
+			$projetos = Projeto::buscarProjetosPalavraChave($palavraChave);
+		}
+
+		echo json_encode($projetos);
+	}
+
 	public function filtrar()
 	{
 		$logado = $this->estaLogado();
@@ -110,7 +125,7 @@ class ProjetoControlador extends Controlador
 		$logado = $this->estaLogado();
 
 		if($logado){
-			if($titulo != null || $titulo != '' || $imagem != null || $imagem != '' || $descricao != null || $descricao != ''){
+			if($titulo == null || $titulo == '' || $imagem == null || $imagem == '' || $descricao == null || $descricao == ''){
 				$resposta = ['type' => 'error', 'frase' => 'Todos campos são obrigatórios'];
 			}elseif(strlen($titulo) < 4 || strlen($titulo) > 254){
 				$resposta = ['type' => 'error', 'frase' => 'Título do projeto precisa ter de 4 a 255 caracteres'];
@@ -122,7 +137,7 @@ class ProjetoControlador extends Controlador
 				$emailSessao = $this->getEmailSessao();
 
 				if($tipoSessao){
-					$pessoa = Pessoa::getDeputado($emailSessao);
+					$pessoa = Deputado::getDeputado($emailSessao);
 					$idDeputado = $pessoa['id_deputado'];
 
 					$projeto = new Projeto(null, $idDeputado, $idPais, null, null, $titulo, $descricao, $imagem);

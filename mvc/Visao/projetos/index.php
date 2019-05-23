@@ -98,6 +98,7 @@
 				<option value="4">Não aceito pelo presidente</option>
 				<option value="5">Empatado</option>
 			</select>
+			<input type="text" id="busca" placeholder="Buscar...">
 			<ul class="larguraListaNoticias" id="listaProjetos">
 				<?php for($i = 5; $i < count($projetos) ; $i++){ ?>
 					<a href="<?= URL_RAIZ . 'projeto/' . $projetos[$i]->getIdProjeto() ?>">
@@ -133,6 +134,7 @@
 				<option value="4">Não aceito pelo presidente</option>
 				<option value="5">Empatado</option>
 			</select>
+			<input type="text" id="busca" placeholder="Buscar..." class="form-control marginTopoInput">
 			<ul class="larguraListaNoticias" id="listaProjetos">
 				<?php foreach ($projetos as $projeto): ?>
 					<a href="<?= URL_RAIZ . 'projeto/' . $projeto->getIdProjeto() ?>">

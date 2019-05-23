@@ -16,9 +16,11 @@ class Projeto extends Modelo
     const BUSCAR_PROJETOS_PAIS_FILTRO= "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE status = ? AND id_pais = ? ORDER BY id_projeto DESC";
     const BUSCAR_PROJETOS_PAIS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC";
     const BUSCAR_PROJETOS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%' ORDER BY id_projeto DESC";
     const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao,id_presidente) VALUES (?, ?,?, ?,?)';
     const ATUALIZAR = 'UPDATE projetos SET status = ? WHERE id_projeto = ?';
     const BUSCAR_VOTO = 'SELECT COUNT(id_voto) as voto FROM deputados JOIN votos USING (id_deputado) WHERE id_projeto = ? AND email = ?';
+    const BUSCAR_PROJETOS_PAIS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') AND id_pais = ? ORDER BY id_projeto DESC";
 
     private $idProjeto;
     private $idDeputado;
@@ -360,6 +362,16 @@ class Projeto extends Modelo
         return $registros;
     }
 
+    public function buscarProjetosDoPaisPalavraChave($idPais, $palavraChave){
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_PALAVRA_CHAVE);
+        $sql->bindValue(1, $palavraChave, PDO::PARAM_STR);
+        $sql->bindValue(2, $palavraChave, PDO::PARAM_STR);
+        $sql->bindValue(3, $idPais, PDO::PARAM_INT);
+        $sql->execute();
+        $registros = $sql->fetchAll();
+        return $registros;
+    }
+
     public function filtrarProjetos($filtro){
         if($filtro == null || $filtro == ""){
             $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_SEM_FILTRO);
@@ -367,6 +379,16 @@ class Projeto extends Modelo
             $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_FILTRO);
             $sql->bindValue(1, $filtro, PDO::PARAM_INT);
         }
+        $sql->execute();
+        $registros = $sql->fetchAll();
+        return $registros;
+    }
+
+    public function buscarProjetosPalavraChave($palavraChave)
+    {
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PALAVRA_CHAVE);
+        $sql->bindValue(1, $palavraChave, PDO::PARAM_STR);
+        $sql->bindValue(2, $palavraChave, PDO::PARAM_STR);
         $sql->execute();
         $registros = $sql->fetchAll();
         return $registros;

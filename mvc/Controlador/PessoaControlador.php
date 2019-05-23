@@ -139,13 +139,11 @@ class PessoaControlador extends Controlador
 
 				if($nome == null || $nome == "" || $email == null || $email == "" || $senha == null || $senha == ""){
 					$resposta = ['status' => false, 'frase' => 'Todos campos são obrigatórios.'];
-					echo json_encode($resposta);
 				}else{
 					$verificacao = Pessoa::pessoaExiste($email);
 
 					if($verificacao){
 						$resposta = ['status' => false, 'frase' => 'Esse e-mail já está cadastrado no sistema.'];
-						echo json_encode($resposta);
 					}else{
 						$idPais = $this->getIdPaisSessao();
 						$deputado = new Deputado($nome, $email, $senha, $idPais);
@@ -155,15 +153,16 @@ class PessoaControlador extends Controlador
 						$nome = $nome[0];
 
 						$resposta = ['status' => true, 'frase' => "Deputado $nome cadastrado!"];
-						echo json_encode($resposta);
 					}
 				}
 			}else{
-				$this->redirecionar(URL_RAIZ);
+				$resposta = ['status' => false, 'frase' => "Deputados não podem cadastrar outros deputados!"];
 			}
 		}else{
-			$this->redirecionar(URL_RAIZ);
+			$resposta = ['status' => false, 'frase' => "Você precisa estar logado como presidente para criar deputados!"];
 		}
+
+		echo json_encode($resposta);
 	}
 
 	public function votar()
@@ -188,7 +187,7 @@ class PessoaControlador extends Controlador
 						$projeto = Projeto::buscarProjeto($idProjeto);
 
 						if($projeto->getIdPais() == $idPaisSessao){
-							$registroDeputado = Pessoa::getDeputado($email);
+							$registroDeputado = Deputado::getDeputado($email);
 							$deputado = new Deputado(
 								$registroDeputado['nome'],
 								$registroDeputado['email'],

@@ -12,6 +12,10 @@ a:hover{
 	margin-top: 113px !important;
 }
 
+.marginTopoInput{
+	margin-top: 10px;
+}
+
 .link-novo-pais{
 	color: #0a0926;
 	font-size: 31px;

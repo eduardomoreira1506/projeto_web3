@@ -1,0 +1,41 @@
+Brasil
+Presidente: bolsonaro@brasil.com
+Deputado: tiririca@brasil.com
+Deputado: eduardo@brasil.com
+Deputado: bruno@brasil.com
+ratinho@brasil.com
+
+Estados Unidos
+Presidente: trump@eua.com
+pedro@eua.com
+jorge@eua.com
+amanda@eua.com
+hudson@eua.com
+
+Peru
+Presidente: martin@peru.com
+carlos@peru.com
+cristina@peru.com
+maria@peru.com
+silvio@peru.com
+
+Inglaterra
+Presidente: elizabeth@inglaterra.com
+ana@inglaterra.com
+silmara@inglaterra.com
+helton@inglaterra.com
+kelvin@inglaterra.com
+
+Congo
+Presidente: denis@congo.com
+catarina@congo.com
+gustavo@congo.com
+cassio@congo.com
+isabella@congo.com
+
+China
+Presidente: xi@china.com
+dylan@china.com
+andre@china.com
+vitoria@china.com
+jaime@china.com

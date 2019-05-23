@@ -6,8 +6,8 @@
 		<div class="formulario">
 			<form id="formulario-novo-projeto">
 				<input type="text" placeholder="titulo do projeto" id="titulo" name="titulo">
-				<input type="file" name="imagem">
-				<textarea id="descricao" name="descricao"></textarea>
+				<input type="file" id="imagem" name="imagem">
+				<textarea id="descricao" name="descricao" id="descricao"></textarea>
 				<button type="submit">Criar</button>
 			</form>
 		</div>

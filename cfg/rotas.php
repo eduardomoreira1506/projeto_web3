@@ -57,4 +57,7 @@ $rotas = [
     '/filtrarProjetos' => [
         'POST' => '\Controlador\ProjetoControlador#filtrar'
     ],
+    '/buscarProjetos' => [
+        'POST' => '\Controlador\ProjetoControlador#buscar'
+    ],
 ];

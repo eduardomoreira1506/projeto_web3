@@ -13,6 +13,7 @@ class Deputado extends Pessoa
     const INSERIR_VOTO = 'INSERT INTO votos(id_projeto,id_deputado,aprovado) VALUES (?, ?, ?)';
     const BUSCAR_TODOS_VOTOS_PROJETO = 'SELECT COUNT(id_voto) as votosProjeto FROM votos WHERE id_projeto = ?';
     const BUSCAR_TODOS_DEPUTADOS_PAIS = 'SELECT COUNT(id_deputado) as deputadosPais FROM deputados WHERE id_pais = ?';
+    const BUSCAR_TODOS_CAMPOS_DEPUTADOS_POR_EMAIL = 'SELECT * FROM deputados WHERE email = ?';
 
     private $idDeputado;
 
@@ -123,5 +124,14 @@ class Deputado extends Pessoa
         }else{
             return false;
         }
+    }
+
+    public function getDeputado($email)
+    {
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_CAMPOS_DEPUTADOS_POR_EMAIL);
+        $sql->bindValue(1, $email, PDO::PARAM_STR);
+        $sql->execute();
+        $registro = $sql->fetch();
+        return $registro;
     }
 }

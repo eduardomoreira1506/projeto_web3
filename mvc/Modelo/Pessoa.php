@@ -8,7 +8,6 @@ class Pessoa extends Modelo
 {
     const BUSCAR_DEPUTADOS_POR_EMAIL = 'SELECT id_pais,nome,email,senha FROM deputados WHERE email = ?';
     const BUSCAR_PRESIDENTES_POR_EMAIL = 'SELECT id_pais,nome,email,senha FROM presidentes WHERE email = ?';
-    const BUSCAR_TODOS_CAMPOS_DEPUTADOS_POR_EMAIL = 'SELECT * FROM deputados WHERE email = ?';
 
     protected $nome;
     protected $email;
@@ -117,15 +116,6 @@ class Pessoa extends Modelo
         }
 
         return $pessoa;
-    }
-
-    public function getDeputado($email)
-    {
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_CAMPOS_DEPUTADOS_POR_EMAIL);
-        $sql->bindValue(1, $email, PDO::PARAM_STR);
-        $sql->execute();
-        $registro = $sql->fetch();
-        return $registro;
     }
     
 }

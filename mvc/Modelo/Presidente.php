@@ -27,7 +27,7 @@ class Presidente extends Pessoa
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR);
-        $comando->bindValue(1, $this->idPais, PDO::PARAM_STR);
+        $comando->bindValue(1, $this->idPais, PDO::PARAM_INT);
         $comando->bindValue(2, $this->nome, PDO::PARAM_STR);
         $comando->bindValue(3, $this->email, PDO::PARAM_STR);
         $comando->bindValue(4, $this->senha, PDO::PARAM_STR);
@@ -56,7 +56,7 @@ class Presidente extends Pessoa
     public function buscarPresidente($email)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PRESIDENTE_POR_EMAIL);
-        $sql->bindValue(1, $email, PDO::PARAM_INT);
+        $sql->bindValue(1, $email, PDO::PARAM_STR);
         $sql->execute();
         $registro = $sql->fetch();
 
@@ -75,8 +75,8 @@ class Presidente extends Pessoa
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR_COMENTARIO);
-        $comando->bindValue(1, $this->idPresidente, PDO::PARAM_STR);
-        $comando->bindValue(2, $idProjeto, PDO::PARAM_STR);
+        $comando->bindValue(1, $this->idPresidente, PDO::PARAM_INT);
+        $comando->bindValue(2, $idProjeto, PDO::PARAM_INT);
         $comando->bindValue(3, $comentario, PDO::PARAM_STR);
         $comando->execute();
         DW3BancoDeDados::getPdo()->commit();

@@ -354,7 +354,7 @@ class Projeto extends Modelo
             $sql->bindValue(1, $idPais, PDO::PARAM_INT);
         }else{
             $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_FILTRO);
-            $sql->bindValue(1, $filtro, PDO::PARAM_INT);
+            $sql->bindValue(1, $filtro, PDO::PARAM_STR);
             $sql->bindValue(2, $idPais, PDO::PARAM_INT);
         }
         $sql->execute();
@@ -377,7 +377,7 @@ class Projeto extends Modelo
             $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_SEM_FILTRO);
         }else{
             $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_FILTRO);
-            $sql->bindValue(1, $filtro, PDO::PARAM_INT);
+            $sql->bindValue(1, $filtro, PDO::PARAM_STR);
         }
         $sql->execute();
         $registros = $sql->fetchAll();
@@ -398,11 +398,11 @@ class Projeto extends Modelo
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $sql = DW3BancoDeDados::prepare(self::INSERIR);
-        $sql->bindValue(1, $this->idDeputado, PDO::PARAM_STR);
-        $sql->bindValue(2, $this->idPais, PDO::PARAM_STR);
+        $sql->bindValue(1, $this->idDeputado, PDO::PARAM_INT);
+        $sql->bindValue(2, $this->idPais, PDO::PARAM_INT);
         $sql->bindValue(3, $this->titulo, PDO::PARAM_STR);
         $sql->bindValue(4, $this->descricao, PDO::PARAM_STR);
-        $sql->bindValue(5, $this->idPresidente, PDO::PARAM_STR);
+        $sql->bindValue(5, $this->idPresidente, PDO::PARAM_INT);
         $sql->execute();
         $this->idProjeto = DW3BancoDeDados::getPdo()->lastInsertId();
         DW3BancoDeDados::getPdo()->commit();
@@ -423,7 +423,7 @@ class Projeto extends Modelo
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_VOTO);
         $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
-        $sql->bindValue(2, $email, PDO::PARAM_INT);
+        $sql->bindValue(2, $email, PDO::PARAM_STR);
         $sql->execute();
         $registro = $sql->fetch();
 

@@ -91,7 +91,7 @@ class ProjetoControlador extends Controlador
 			$projetos = $projeto->buscarTodosProjetosDoPais();
 
 			$informacoes = [
-				'scripts' => [],
+				'scripts' => ['projetos'],
 				'projetos' => $projetos,
 				'logado' => $logado,
 			];

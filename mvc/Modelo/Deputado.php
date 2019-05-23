@@ -27,22 +27,22 @@ class Deputado extends Pessoa
         return $this->idDeputado;
     }
 
+    public function setIdDeputado($idDeputado)
+    {
+        $this->idDeputado = $idDeputado;
+    }
+
     public function inserir()
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR);
-        $comando->bindValue(1, $this->idPais, PDO::PARAM_STR);
+        $comando->bindValue(1, $this->idPais, PDO::PARAM_INT);
         $comando->bindValue(2, $this->nome, PDO::PARAM_STR);
         $comando->bindValue(3, $this->email, PDO::PARAM_STR);
         $comando->bindValue(4, $this->senha, PDO::PARAM_STR);
         $comando->execute();
         $this->idDeputado = DW3BancoDeDados::getPdo()->lastInsertId();
         DW3BancoDeDados::getPdo()->commit();
-    }
-
-    public function setIdDeputado($idDeputado)
-    {
-        $this->idDeputado = $idDeputado;
     }
 
     public function pegarInformacoes()
@@ -60,7 +60,7 @@ class Deputado extends Pessoa
     public function buscarDeputado($email)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_DEPUTADO_POR_EMAIL);
-        $sql->bindValue(1, $email, PDO::PARAM_INT);
+        $sql->bindValue(1, $email, PDO::PARAM_STR);
         $sql->execute();
         $registro = $sql->fetch();
 
@@ -79,8 +79,8 @@ class Deputado extends Pessoa
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR_COMENTARIO);
-        $comando->bindValue(1, $this->idDeputado, PDO::PARAM_STR);
-        $comando->bindValue(2, $idProjeto, PDO::PARAM_STR);
+        $comando->bindValue(1, $this->idDeputado, PDO::PARAM_INT);
+        $comando->bindValue(2, $idProjeto, PDO::PARAM_INT);
         $comando->bindValue(3, $comentario, PDO::PARAM_STR);
         $comando->execute();
         DW3BancoDeDados::getPdo()->commit();
@@ -90,9 +90,9 @@ class Deputado extends Pessoa
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR_VOTO);
-        $comando->bindValue(1, $idProjeto, PDO::PARAM_STR);
-        $comando->bindValue(2, $this->idDeputado, PDO::PARAM_STR);
-        $comando->bindValue(3, $voto, PDO::PARAM_STR);
+        $comando->bindValue(1, $idProjeto, PDO::PARAM_INT);
+        $comando->bindValue(2, $this->idDeputado, PDO::PARAM_INT);
+        $comando->bindValue(3, $voto, PDO::PARAM_INT);
         $comando->execute();
         DW3BancoDeDados::getPdo()->commit();
 

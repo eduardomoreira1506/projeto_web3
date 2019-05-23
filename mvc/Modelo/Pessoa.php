@@ -68,7 +68,7 @@ class Pessoa extends Modelo
     public function pessoaExiste($email)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PRESIDENTES_POR_EMAIL);
-        $sql->bindValue(1, $email, PDO::PARAM_INT);
+        $sql->bindValue(1, $email, PDO::PARAM_STR);
         $sql->execute();
         $registro = $sql->fetch();
 
@@ -76,7 +76,7 @@ class Pessoa extends Modelo
             return true;
         }else{
             $sql = DW3BancoDeDados::prepare(self::BUSCAR_DEPUTADOS_POR_EMAIL);
-            $sql->bindValue(1, $email, PDO::PARAM_INT);
+            $sql->bindValue(1, $email, PDO::PARAM_STR);
             $sql->execute();
             $registro = $sql->fetch();
 

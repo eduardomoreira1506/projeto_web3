@@ -71,8 +71,8 @@ class Pais extends Modelo
     public function paisExiste($nomePais, $sigla)
     {
         $comando = DW3BancoDeDados::prepare(self::VERIFICACAO_PAIS);
-        $comando->bindValue(1, $nomePais, PDO::PARAM_INT);
-        $comando->bindValue(2, $sigla, PDO::PARAM_INT);
+        $comando->bindValue(1, $nomePais, PDO::PARAM_STR);
+        $comando->bindValue(2, $sigla, PDO::PARAM_STR);
         $comando->execute();
         $registro = $comando->fetch();
 

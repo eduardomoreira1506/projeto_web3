@@ -48,6 +48,21 @@ class ProjetoControlador extends Controlador
 		echo json_encode($projetos);
 	}
 
+	public function filtrar()
+	{
+		$logado = $this->estaLogado();
+		$filtro = $_POST['filtro'];
+
+		if($logado){
+			$idPaisSessao = $this->getIdPaisSessao();
+			$projetos = Projeto::filtarProjetosDoPais($idPaisSessao, $filtro);
+		}else{
+			$projetos = Projeto::filtrarProjetos($filtro);
+		}
+
+		echo json_encode($projetos);
+	}
+
 	public function filtrarPais($idPais)
 	{
 		$logado = $this->estaLogado();
@@ -75,18 +90,12 @@ class ProjetoControlador extends Controlador
 		$logado = $this->estaLogado();
 
 		if($logado){
-			$tipoSessao = $this->getTipoSessao();
+			$informacoes = [
+				'scripts' => ['novo-projeto'],
+				'logado' => $logado,
+			];
 
-			if($tipoSessao){
-				$informacoes = [
-					'scripts' => ['novo-projeto'],
-					'logado' => $logado,
-				];
-
-				$this->visao('projetos/novo-projeto.php', $informacoes);
-			}else{
-				$this->redirecionar(URL_RAIZ);
-			}
+			$this->visao('projetos/novo-projeto.php', $informacoes);
 		}else{
 			$this->redirecionar(URL_RAIZ);
 		}
@@ -101,21 +110,36 @@ class ProjetoControlador extends Controlador
 		$logado = $this->estaLogado();
 
 		if($logado){
-			$tipoSessao = $this->getTipoSessao();
-
-			if($titulo != null && $titulo != '' && $imagem != null && $imagem != '' && $descricao != null && $descricao != ''){
-				$emailDeputado = $this->getEmailSessao();
-				$pessoa = Pessoa::getDeputado($emailDeputado);
-
-				$idDeputado = $pessoa['id_deputado'];
-
+			if($titulo != null || $titulo != '' || $imagem != null || $imagem != '' || $descricao != null || $descricao != ''){
+				$resposta = ['type' => 'error', 'frase' => 'Todos campos são obrigatórios'];
+			}elseif(strlen($titulo) < 4 || strlen($titulo) > 254){
+				$resposta = ['type' => 'error', 'frase' => 'Título do projeto precisa ter de 4 a 255 caracteres'];
+			}elseif(strlen($descricao) < 10 || strlen($descricao) > 254){
+				$resposta = ['type' => 'error', 'frase' => 'Descrição do projeto precisa ter de 10 a 255 caracteres'];
+			}else{
+				$tipoSessao = $this->getTipoSessao();
 				$idPais = $this->getIdPaisSessao();
+				$emailSessao = $this->getEmailSessao();
 
-				$projeto = new Projeto(null, $idDeputado, $idPais, null, null, $titulo, $descricao, $imagem);
+				if($tipoSessao){
+					$pessoa = Pessoa::getDeputado($emailSessao);
+					$idDeputado = $pessoa['id_deputado'];
+
+					$projeto = new Projeto(null, $idDeputado, $idPais, null, null, $titulo, $descricao, $imagem);
+				}else{
+					$presidente = Presidente::buscarPresidente($emailSessao);
+					$idPresidente = $presidente->getIdPresidente();
+
+					$projeto = new Projeto(null, null, $idPais, null, null, $titulo, $descricao, $imagem, null, null, null, $idPresidente);
+				}
+
 				$projeto->inserir();
+				
 
-				$this->redirecionar(URL_RAIZ);
+				$resposta = ['type' => 'success', 'frase' => 'Projeto criado com sucesso'];
 			}
+
+			echo json_encode($resposta);
 		}else{
 			$this->redirecionar(URL_RAIZ);
 		}
@@ -172,7 +196,10 @@ class ProjetoControlador extends Controlador
 		$logado = $this->estaLogado();
 
 		if($logado){
-			$idPaisSessao = $this->getIdPaisSessao();
+			if(strlen($comentario) > 255){
+				$resposta = ['status' => false, 'frase' => 'Comentário deve ter no máximo 255 caracteres!'];
+			}else{
+				$idPaisSessao = $this->getIdPaisSessao();
 			$projeto = Projeto::buscarProjeto($idProjeto);
 			$idPais = $projeto->getIdPais();
 
@@ -188,11 +215,12 @@ class ProjetoControlador extends Controlador
 				}
 
 				$resposta = ['status' => true, 'nome' => $this->getNomeSessao()];
-				echo json_encode($resposta);
 			}else{
 				$resposta = ['status' => false, 'frase' => 'Você só pode comentar em projetos do seu país!'];
-				echo json_encode($resposta);
+			}	
 			}
+			
+			echo json_encode($resposta);
 		}else{
 			$resposta = ['status' => false, 'frase' => 'Você precisa estar logado para poder comentar!'];
 			echo json_encode($resposta);

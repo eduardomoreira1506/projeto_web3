@@ -43,6 +43,7 @@ $(document).ready(function(){
 									<input type="text" placeholder="nome" id="nome" name="nome">
 									<input type="email" placeholder="email" id="email" name="email">
 									<input type="password" placeholder="senha" id="senha" name="senha">
+									<input type="password" placeholder="confirmação senha" id="confirmacao_senha" name="confirmacao_senha">
 									<button type="submit">Criar</button>
 								`;
 
@@ -70,14 +71,26 @@ $(document).ready(function(){
 			var email = $('#email').val();
 			var senha = $('#senha').val();
 
-			if(nomePais == "" || nomePais == undefined || sigla == "" || sigla == undefined || imagem == "" || imagem == undefined || nome == "" || nome == undefined || email == "" || email == undefined || senha == "" || senha == undefined){
-				e.preventDefault();
-				Swal.fire({
-					type: 'error',
-					title: 'Oops...',
-					text: 'Algum dos campos não foram preenchidos corretamente!'
-				});
-			}
+			e.preventDefault();
+			var formulario = document.getElementById('formulario-novo-pais');
+			var formData = new FormData(formulario);
+
+			$.ajax({
+				url: `${baseUrl}novoPais`,
+				type: 'POST',
+				data: formData,
+				dataType: 'json',
+				processData: false,  
+				contentType: false,
+				success: function(retorno){
+					Swal.fire({
+						type: retorno.type,
+						title: 'Oops...',
+						text: retorno.frase
+					});
+				}
+			});
+			
 		}
 	});
 })

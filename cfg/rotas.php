@@ -54,4 +54,7 @@ $rotas = [
     '/votar' => [
         'POST' => '\Controlador\PessoaControlador#votar'
     ],
+    '/filtrarProjetos' => [
+        'POST' => '\Controlador\ProjetoControlador#filtrar'
+    ],
 ];

@@ -8,17 +8,22 @@ use \Framework\DW3ImagemUpload;
 class Projeto extends Modelo
 {
     const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y-%H') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT 10";
-    const BUSCAR_TODOS_PAGINACAO_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT ? , 10";
+    const BUSCAR_TODOS_PAGINACAO_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT ? , 10";
     const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y-%H') AS horario FROM projetos ORDER BY id_projeto DESC LIMIT 10";
     const BUSCAR_TODOS_PAGINACAO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos ORDER BY id_projeto DESC LIMIT ? , 10";
     const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 1) as votos_aprovados,(SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 0) as votos_reprovados,(SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
-    const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao) VALUES (?, ?,?, ?)';
+    const BUSCAR_PROJETOS_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE status = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PAIS_FILTRO= "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE status = ? AND id_pais = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PAIS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos ORDER BY id_projeto DESC";
+    const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao,id_presidente) VALUES (?, ?,?, ?,?)';
     const ATUALIZAR = 'UPDATE projetos SET status = ? WHERE id_projeto = ?';
     const BUSCAR_VOTO = 'SELECT COUNT(id_voto) as voto FROM deputados JOIN votos USING (id_deputado) WHERE id_projeto = ? AND email = ?';
 
     private $idProjeto;
     private $idDeputado;
     private $idPais;
+    private $idPresidente;
     private $dataCriacao;
     private $status;
     private $titulo;
@@ -42,7 +47,8 @@ class Projeto extends Modelo
         $imagem = null,
         $dataResultado = null,
         $votosAprovados = null,
-        $votosReprovados = null
+        $votosReprovados = null,
+        $idPresidente = null
     ) {
         $this->idProjeto = $idProjeto;
         $this->idDeputado = $idDeputado;
@@ -55,6 +61,7 @@ class Projeto extends Modelo
         $this->dataResultado = $dataResultado;
         $this->votosAprovados = $votosAprovados;
         $this->votosReprovados = $votosReprovados;
+        $this->idPresidente = $idPresidente;
         parent::__construct('projetos');
     }
 
@@ -339,6 +346,32 @@ class Projeto extends Modelo
         return $registros;
     }
 
+    public function filtarProjetosDoPais($idPais, $filtro){
+        if($filtro == null || $filtro == ""){
+            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_SEM_FILTRO);
+            $sql->bindValue(1, $idPais, PDO::PARAM_INT);
+        }else{
+            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_FILTRO);
+            $sql->bindValue(1, $filtro, PDO::PARAM_INT);
+            $sql->bindValue(2, $idPais, PDO::PARAM_INT);
+        }
+        $sql->execute();
+        $registros = $sql->fetchAll();
+        return $registros;
+    }
+
+    public function filtrarProjetos($filtro){
+        if($filtro == null || $filtro == ""){
+            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_SEM_FILTRO);
+        }else{
+            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_FILTRO);
+            $sql->bindValue(1, $filtro, PDO::PARAM_INT);
+        }
+        $sql->execute();
+        $registros = $sql->fetchAll();
+        return $registros;
+    }
+
     public function inserir()
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
@@ -347,6 +380,7 @@ class Projeto extends Modelo
         $sql->bindValue(2, $this->idPais, PDO::PARAM_STR);
         $sql->bindValue(3, $this->titulo, PDO::PARAM_STR);
         $sql->bindValue(4, $this->descricao, PDO::PARAM_STR);
+        $sql->bindValue(5, $this->idPresidente, PDO::PARAM_STR);
         $sql->execute();
         $this->idProjeto = DW3BancoDeDados::getPdo()->lastInsertId();
         DW3BancoDeDados::getPdo()->commit();

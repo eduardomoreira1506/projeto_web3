@@ -12,14 +12,13 @@
 						<h4>Criar novo Deputado</h4>
 					</div>
 				</a>
-			<?php }else{ ?>
-				<a href="novoProjeto">
-					<div>
-						<i class="fas fa-signal"></i>
-						<h4>Criar novo Projeto</h4>
-					</div>
-				</a>
 			<?php } ?>
+			<a href="novoProjeto">
+				<div>
+					<i class="fas fa-signal"></i>
+					<h4>Criar novo Projeto</h4>
+				</div>
+			</a>
 		</div>
 	</section>
 </div>

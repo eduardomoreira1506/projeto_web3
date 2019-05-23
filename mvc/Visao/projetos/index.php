@@ -89,6 +89,15 @@
 			</div>
 		</section>
 		<section class="noticiasVariadas">
+			<select class="form-control" id="filtro-projetos">
+				<option value="">Todos</option>
+				<option value="0">Aguardando aprovação do presidente</option>
+				<option value="1">Em votação</option>
+				<option value="2">Aprovado</option>
+				<option value="3">Reprovado</option>
+				<option value="4">Não aceito pelo presidente</option>
+				<option value="5">Empatado</option>
+			</select>
 			<ul class="larguraListaNoticias" id="listaProjetos">
 				<?php for($i = 5; $i < count($projetos) ; $i++){ ?>
 					<a href="<?= URL_RAIZ . 'projeto/' . $projetos[$i]->getIdProjeto() ?>">
@@ -115,6 +124,15 @@
 		</section>
 	<?php }else{ ?>
 		<section class="noticiasVariadas marginTopo">
+			<select class="form-control" id="filtro-projetos">
+				<option value="">Todos</option>
+				<option value="0">Aguardando aprovação do presidente</option>
+				<option value="1">Em votação</option>
+				<option value="2">Aprovado</option>
+				<option value="3">Reprovado</option>
+				<option value="4">Não aceito pelo presidente</option>
+				<option value="5">Empatado</option>
+			</select>
 			<ul class="larguraListaNoticias" id="listaProjetos">
 				<?php foreach ($projetos as $projeto): ?>
 					<a href="<?= URL_RAIZ . 'projeto/' . $projeto->getIdProjeto() ?>">

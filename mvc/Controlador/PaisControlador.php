@@ -52,7 +52,7 @@ class PaisControlador extends Controlador
 			echo json_encode($resposta);
 		}else{
 			$verificacao = Pais::paisExiste($_POST['nomePais'], $_POST['sigla']);
-		
+
 			if($verificacao){
 				$resposta = ['status' => false, 'frase' => 'Um país com essa sigla ou nome já existe.'];
 			}else{
@@ -71,12 +71,29 @@ class PaisControlador extends Controlador
 		$nomePresidente = $_POST['nome'];
 		$email = $_POST['email'];
 		$senha = $_POST['senha'];
+		$confirmacaoSenha = $_POST['confirmacao_senha'];
 
 		$verificacao = Pais::paisExiste($nomePais, $sigla);
 		$logado = $this->estaLogado();
 
-		if($nomePais != null && $nomePais != '' && $sigla != null && $sigla != '' && $bandeira != null && $bandeira != '' && $nomePresidente != null && $nomePresidente != '' && $email != null && $email != '' && $senha != null && $senha != '' && $verificacao == false && strlen($sigla) == 2 && !$logado){
 
+		if($verificacao){
+			$resposta = ['type' => 'error', 'frase' => 'Esse país já existe']; 
+		}elseif($logado){
+			$resposta = ['type' => 'error', 'frase' => 'Você não pode estar logado para criar países']; 
+		}elseif($nomePais == null || $nomePais == '' || $sigla == null || $sigla == '' || $bandeira == null || $bandeira == '' || $nomePresidente == null || $nomePresidente == '' || $email == null || $email == '' || $senha == null || $senha == '' || $confirmacaoSenha == '' || $confirmacaoSenha == null){
+			$resposta = ['type' => 'error', 'frase' => 'Todos campos são obrigatórios']; 
+		}elseif($senha != $confirmacaoSenha){
+			$resposta = ['type' => 'error', 'frase' => 'Senha e confirmação de senha são diferentes']; 
+		}elseif(strlen($email) < 6 && strlen($email) > 255){
+			$resposta = ['type' => 'error', 'frase' => 'Email precisa ter entre 6 e 255 caracteres']; 
+		}elseif(strlen($nomePresidente) < 3 && strlen($nomePresidente) > 255){
+			$resposta = ['type' => 'error', 'frase' => 'Nome do presidente precisa ter entre 3 e 255 caracteres']; 
+		}elseif(strlen($nomePresidente) < 5){
+			$resposta = ['type' => 'error', 'frase' => 'Senha precisa ter no mínimo 5 caracteres']; 
+		}elseif(strlen($sigla) != 2){
+			$resposta = ['type' => 'error', 'frase' => 'Sigla precisa ter duas letras']; 
+		}else{
 			$pais = new Pais($nomePais, $sigla, $bandeira);
 			$pais->inserir();
 
@@ -84,8 +101,10 @@ class PaisControlador extends Controlador
 			$presidente->inserir();
 			$idPresidente = $presidente->getIdPresidente();
 			
-			$this->redirecionar(URL_RAIZ);
+			$resposta = ['type' => 'success', 'frase' => 'País criado com sucesso'];
 		}
+
+		echo json_encode($resposta);
 	}
 
 }

@@ -23,6 +23,11 @@ class Presidente extends Pessoa
         return $this->idPresidente;
     }
 
+    public function setIdPresidente($idPresidente)
+    {
+        $this->idPresidente = $idPresidente;
+    }
+
     public function inserir()
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
@@ -34,11 +39,6 @@ class Presidente extends Pessoa
         $comando->execute();
         $this->idPresidente = DW3BancoDeDados::getPdo()->lastInsertId();
         DW3BancoDeDados::getPdo()->commit();
-    }
-
-    public function setIdPresidente($idPresidente)
-    {
-        $this->idPresidente = $idPresidente;
     }
 
     public function pegarInformacoes()

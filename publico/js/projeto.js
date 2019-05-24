@@ -26,6 +26,11 @@ $(document).ready(function(){
 						</div>
 					</li>`;
 
+					var quantidadeDeComentariosAtuais = $('#numeroQuantidadeComentarios').html()
+					quantidadeDeComentariosAtuais = parseInt(quantidadeDeComentariosAtuais);
+					quantidadeDeComentariosAtuais++;
+					$('#numeroQuantidadeComentarios').html(quantidadeDeComentariosAtuais)
+
 					$('#lista-de-comentarios').prepend(html);
 					$('#comentario').val('');
 				}

@@ -44,13 +44,13 @@ class Pais extends Modelo
         return $this->idPais;
     }
 
+    public function getPresidente(){
+        return $this->presidente;
+    }
+
     public function setPresidente($presidente)
     {
         $this->presidente = $presidente;
-    }
-
-    public function getPresidente(){
-        return $this->presidente;
     }
 
     public function buscarTodosPaises()

@@ -7,20 +7,20 @@ use \Framework\DW3ImagemUpload;
 
 class Projeto extends Modelo
 {
-    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y-%H') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT 10";
-    const BUSCAR_TODOS_PAGINACAO_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT ? , 10";
-    const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y-%H') AS horario FROM projetos ORDER BY id_projeto DESC LIMIT 10";
-    const BUSCAR_TODOS_PAGINACAO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos ORDER BY id_projeto DESC LIMIT ? , 10";
+    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT 10";
+    const BUSCAR_TODOS_PAGINACAO_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT ? , 10";
+    const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos ORDER BY id_projeto DESC LIMIT 10";
+    const BUSCAR_TODOS_PAGINACAO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos ORDER BY id_projeto DESC LIMIT ? , 10";
     const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 1) as votos_aprovados,(SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 0) as votos_reprovados,(SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
-    const BUSCAR_PROJETOS_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE status = ? ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_PAIS_FILTRO= "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE status = ? AND id_pais = ? ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_PAIS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%' ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PAIS_FILTRO= "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status = ? AND id_pais = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PAIS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%' ORDER BY id_projeto DESC";
     const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao,id_presidente) VALUES (?, ?,?, ?,?)';
     const ATUALIZAR = 'UPDATE projetos SET status = ? WHERE id_projeto = ?';
     const BUSCAR_VOTO = 'SELECT COUNT(id_voto) as voto FROM deputados JOIN votos USING (id_deputado) WHERE id_projeto = ? AND email = ?';
-    const BUSCAR_PROJETOS_PAIS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, DATE_FORMAT(data_criacao,'%d-%m-%Y') AS horario FROM projetos WHERE (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') AND id_pais = ? ORDER BY id_projeto DESC";
+    const BUSCAR_PROJETOS_PAIS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') AND id_pais = ? ORDER BY id_projeto DESC";
 
     private $idProjeto;
     private $idDeputado;
@@ -72,6 +72,21 @@ class Projeto extends Modelo
         $this->tempoFormatado = $tempoFormatado;
     }
 
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+    }
+
+    public function setIdPais($idPais)
+    {
+        $this->idPais = $idPais;
+    }
+
+    public function setQuantidadeComentarios($quantidadeComentarios)
+    {
+        $this->quantidadeComentarios = $quantidadeComentarios;
+    }
+
     public function getVotosAprovados()
     {
         return $this->votosAprovados;
@@ -118,11 +133,6 @@ class Projeto extends Modelo
         return $this->status;
     }
 
-    public function setPais($pais)
-    {
-        $this->pais = $pais;
-    }
-
     public function getTitulo()
     {
         return $this->titulo;
@@ -143,11 +153,6 @@ class Projeto extends Modelo
         return $this->idProjeto;
     }
 
-    public function setIdPais($idPais)
-    {
-        $this->idPais = $idPais;
-    }
-
     public function getIdPais()
     {
         return $this->idPais;
@@ -156,11 +161,6 @@ class Projeto extends Modelo
     public function getPais()
     {
         return $this->pais;
-    }
-
-    public function setQuantidadeComentarios($quantidadeComentarios)
-    {
-        $this->quantidadeComentarios = $quantidadeComentarios;
     }
 
     public function getQuantidadeComentarios()
@@ -227,38 +227,15 @@ class Projeto extends Modelo
                 $registro['data_resultado']
             );
             
-            $dataAtual = mktime();
-            $diaAtual = date("d", $dataAtual);
-            $mesAtual = date("m", $dataAtual);
-            $anoAtual = date("Y", $dataAtual);
-            $horaAtual = date("h", $dataAtual);
-
-            $arrayDataRegistro = explode("-", $registro['horario']);
-            $diaRegistro = $arrayDataRegistro[0];
-            $mesRegistro = $arrayDataRegistro[1];
-            $anoRegistro = $arrayDataRegistro[2];
-            $horarioRegistro = $arrayDataRegistro[3];
-
-            if($diaAtual == $diaRegistro && $mesAtual == $mesRegistro && $anoAtual == $anoRegistro){
-                $projeto->setTempoFormatado($horaAtual - $horarioRegistro . ' hora(s) atrás');
-            }elseif($mesAtual == $mesRegistro){
-                $projeto->setTempoFormatado($diaAtual - $diaRegistro . ' dia(s) atrás');
-            }elseif($anoAtual == $anoRegistro){
-                $meses = $mesAtual - $mesRegistro;
-
-                if($diaAtual > $diaRegistro){
-                    $projeto->setTempoFormatado(($diaAtual - $diaRegistro) + ($meses * 30) . ' dias atrás');
-                }else{
-                    $projeto->setTempoFormatado(($diaRegistro - $diaAtual) + ($meses * 30) . ' dias atrás');
-                }
+            $diferencaEmMinutos = $registro['diferenca_em_minutos'];
+            if($diferencaEmMinutos < 60){
+                $projeto->setTempoFormatado("$diferencaEmMinutos minuto(s) atrás");
+            }elseif($diferencaEmMinutos < 1440){
+                $diferencaEmHoras = round($diferencaEmMinutos / 60);
+                $projeto->setTempoFormatado("$diferencaEmHoras hora(s) atrás");
             }else{
-                $anos = $anoAtual = $anoRegistro;
-
-                if($mesAtual > $mesRegistro){
-                    $projeto->setTempoFormatado($anos . ' anos e' + ($mesAtual - $mesRegistro ) * 30 . ' dias atrás');
-                }else{
-                    $projeto->setTempoFormatado($anos . ' anos e' + ($mesRegistro - $mesAtual) * 30 . ' dias atrás');
-                }
+                $diferencaEmDias = round($diferencaEmMinutos / 1440);
+                $projeto->setTempoFormatado("$diferencaEmDias dia(s) atrás");
             }
 
             $objetos[] = $projeto;
@@ -287,40 +264,16 @@ class Projeto extends Modelo
                 null,
                 $registro['data_resultado']
             );
-            
 
-            $dataAtual = mktime();
-            $diaAtual = date("d", $dataAtual);
-            $mesAtual = date("m", $dataAtual);
-            $anoAtual = date("Y", $dataAtual);
-            $horaAtual = date("h", $dataAtual);
-
-            $arrayDataRegistro = explode("-", $registro['horario']);
-            $diaRegistro = $arrayDataRegistro[0];
-            $mesRegistro = $arrayDataRegistro[1];
-            $anoRegistro = $arrayDataRegistro[2];
-            $horarioRegistro = $arrayDataRegistro[3];
-
-            if($diaAtual == $diaRegistro && $mesAtual == $mesRegistro && $anoAtual == $anoRegistro){
-                $projeto->setTempoFormatado($horaAtual - $horarioRegistro . ' hora(s) atrás');
-            }elseif($mesAtual == $mesRegistro){
-                $projeto->setTempoFormatado($diaAtual - $diaRegistro . ' dia(s) atrás');
-            }elseif($anoAtual == $anoRegistro){
-                $meses = $mesAtual - $mesRegistro;
-
-                if($diaAtual > $diaRegistro){
-                    $projeto->setTempoFormatado(($diaAtual - $diaRegistro) + ($meses * 30) . ' dias atrás');
-                }else{
-                    $projeto->setTempoFormatado(($diaRegistro - $diaAtual) + ($meses * 30) . ' dias atrás');
-                }
+            $diferencaEmMinutos = $registro['diferenca_em_minutos'];
+            if($diferencaEmMinutos < 60){
+                $projeto->setTempoFormatado("$diferencaEmMinutos minuto(s) atrás");
+            }elseif($diferencaEmMinutos < 1440){
+                $diferencaEmHoras = round($diferencaEmMinutos / 60);
+                $projeto->setTempoFormatado("$diferencaEmHoras hora(s) atrás");
             }else{
-                $anos = $anoAtual = $anoRegistro;
-
-                if($mesAtual > $mesRegistro){
-                    $projeto->setTempoFormatado($anos . ' anos e' + ($mesAtual - $mesRegistro ) * 30 . ' dias atrás');
-                }else{
-                    $projeto->setTempoFormatado($anos . ' anos e' + ($mesRegistro - $mesAtual) * 30 . ' dias atrás');
-                }
+                $diferencaEmDias = round($diferencaEmMinutos / 1440);
+                $projeto->setTempoFormatado("$diferencaEmDias dia(s) atrás");
             }
 
             $objetos[] = $projeto;

@@ -234,7 +234,7 @@ header{
 			.noticiasVariadas .larguraListaNoticias .larguraImagem{
 				position: absolute;
 				right: 50%;
-				top: 50%;
+				top: 80%;
 				transform: translate(50%,-50%);
 				width: 150px;
 				height: 150px;
@@ -313,7 +313,6 @@ header{
 	width: 100%;
 }
 footer{
-	margin-top: 32px;
     width: 100%;
     background: #0A0926;
     color: #fff;

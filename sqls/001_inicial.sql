@@ -30,7 +30,8 @@ CREATE TABLE projetos(
 	status int DEFAULT 0,
 	titulo varchar(255) NOT NULL,
 	descricao TEXT NOT NULL,
-	data_resultado DATETIME
+	data_resultado DATETIME,
+	id_presidente INT
 );
 
 CREATE TABLE votos(
@@ -50,8 +51,10 @@ CREATE TABLE comentarios(
 );
 
 ALTER TABLE presidentes ADD FOREIGN KEY (id_pais) REFERENCES paises(id_pais);
+ALTER TABLE deputados ADD FOREIGN KEY (id_pais) REFERENCES paises(id_pais);
 ALTER TABLE projetos ADD FOREIGN KEY (id_deputado) REFERENCES deputados(id_deputado);
 ALTER TABLE projetos ADD FOREIGN KEY (id_pais) REFERENCES paises(id_pais);
+ALTER TABLE projetos ADD FOREIGN KEY (id_presidente) REFERENCES presidentes(id_presidente);
 ALTER TABLE votos ADD FOREIGN KEY (id_projeto) REFERENCES projetos(id_projeto);
 ALTER TABLE votos ADD FOREIGN KEY (id_deputado) REFERENCES deputados(id_deputado);
 ALTER TABLE comentarios ADD FOREIGN KEY (id_deputado) REFERENCES deputados(id_deputado);

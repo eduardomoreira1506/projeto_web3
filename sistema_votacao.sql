@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Maio-2019 às 21:52
+-- Generation Time: 24-Maio-2019 às 22:27
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 5.6.40
 
@@ -36,6 +36,14 @@ CREATE TABLE `comentarios` (
   `comentario` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `data_comentario` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `comentarios`
+--
+
+INSERT INTO `comentarios` (`id_comentario`, `id_deputado`, `id_presidente`, `id_projeto`, `comentario`, `data_comentario`) VALUES
+(1, NULL, 1, 1, 'AI sim!!!', '2019-05-24 15:41:24'),
+(2, NULL, 1, 1, 'dsadsa', '2019-05-24 15:42:49');
 
 -- --------------------------------------------------------
 
@@ -103,7 +111,8 @@ INSERT INTO `paises` (`id_pais`, `nome`, `sigla`) VALUES
 (3, 'Peru', 'PR'),
 (4, 'Inglaterra', 'IG'),
 (5, 'Congo', 'CN'),
-(6, 'China', 'CH');
+(6, 'China', 'CH'),
+(7, 'Honduras', 'HN');
 
 -- --------------------------------------------------------
 
@@ -129,7 +138,8 @@ INSERT INTO `presidentes` (`id_presidente`, `id_pais`, `nome`, `email`, `senha`)
 (3, 3, 'Martín Vizcarra', 'martin@peru.com', '$2y$10$z//k5vFGHGQQi3alF8ihNu1hYd85QMYtSQfjelArMZ15Lp91suxee'),
 (4, 4, 'Elizabeth II', 'elizabeth@inglaterra.com', '$2y$10$l..56Mi02p2s.c5lNR/dwuzVj.6z7XV3OKC8pJveWbHRRm2KUXCx2'),
 (5, 5, 'Denis Sassou Nguesso', 'denis@congo.com', '$2y$10$3kJdgLfKYvnJeSu4BNBhveAFfF3G6z5SUHkQNhqV4wHW6qriwCifC'),
-(6, 6, 'Xi Jinping', 'xi@china.com', '$2y$10$5SnOrZBRxZ/LqjNQ0PzROeOc7JrPxprj6M8J9LCRi9SmUkzbtrkCW');
+(6, 6, 'Xi Jinping', 'xi@china.com', '$2y$10$5SnOrZBRxZ/LqjNQ0PzROeOc7JrPxprj6M8J9LCRi9SmUkzbtrkCW'),
+(7, 7, 'Presidente de Honduras', 'presidente@honduras.com', '$2y$10$fEEBoLIcOF9wlwF.rdHc.OJ3s77ALfaneJU2/GHwbOJeKKg1N0zzS');
 
 -- --------------------------------------------------------
 
@@ -154,7 +164,8 @@ CREATE TABLE `projetos` (
 --
 
 INSERT INTO `projetos` (`id_projeto`, `id_deputado`, `id_pais`, `data_criacao`, `status`, `titulo`, `descricao`, `data_resultado`, `id_presidente`) VALUES
-(1, NULL, 1, '2019-05-23 16:42:53', 0, 'Brasil 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie gravida lectus, sed mollis ante consequat imperdiet.', NULL, 1);
+(1, NULL, 1, '2019-05-23 16:42:53', 1, 'Brasil 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie gravida lectus, sed mollis ante consequat imperdiet.', NULL, 1),
+(2, NULL, 1, '2019-05-24 17:02:16', 0, 'Construções', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie gravida lectus, sed mollis ante consequat imperdiet.', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +236,7 @@ ALTER TABLE `votos`
 -- AUTO_INCREMENT for table `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `deputados`
@@ -237,19 +248,19 @@ ALTER TABLE `deputados`
 -- AUTO_INCREMENT for table `paises`
 --
 ALTER TABLE `paises`
-  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_pais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `presidentes`
 --
 ALTER TABLE `presidentes`
-  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_presidente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `votos`

@@ -8,14 +8,14 @@
 			<?php if(!$tipo){ ?>
 				<a href="novoDeputado">
 					<div>
-						<i class="fas fa-signal"></i>
+						<i class="fas fa-plus-square"></i>
 						<h4>Criar novo Deputado</h4>
 					</div>
 				</a>
 			<?php } ?>
 			<a href="novoProjeto">
 				<div>
-					<i class="fas fa-signal"></i>
+					<i class="fas fa-project-diagram"></i>
 					<h4>Criar novo Projeto</h4>
 				</div>
 			</a>

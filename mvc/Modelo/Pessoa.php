@@ -25,26 +25,6 @@ class Pessoa extends Modelo
         parent::__construct($tabelaBanco);
     }
 
-    public function getNome()
-    {
-        return $this->nome;
-    }
-
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function setIdPais($idPais)
-    {
-        $this->idPais = $idPais;
-    }
-
     public function getEmail()
     {
         return $this->email;
@@ -63,6 +43,26 @@ class Pessoa extends Modelo
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setIdPais($idPais)
+    {
+        $this->idPais = $idPais;
     }
 
     public function pessoaExiste($email)

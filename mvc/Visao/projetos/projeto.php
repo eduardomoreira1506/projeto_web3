@@ -15,13 +15,13 @@
 			</figure>
 			<ul>
 				<li><?= $projeto->getPais()->getNome() ?></li>
-				<li><?= $projeto->getPais()->getPresidente()->getNome() ?></li>
+				<li>Presidente: <?= $projeto->getPais()->getPresidente()->getNome() ?></li>
 				<?php if($tipo){ ?>
-					<li><?= $projeto->getStatus() ?></li>
+					<li>Status: <?= $projeto->getStatus() ?></li>
 				<?php }elseif($projeto->getStatusNumero() == 0){ ?>
-					<li>Aguardando sua aprovação</li>
+					<li>Status: Aguardando sua aprovação</li>
 				<?php }else{ ?>
-					<li><?= $projeto->getStatus() ?></li>
+					<li>Status: <?= $projeto->getStatus() ?></li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -65,15 +65,6 @@
 						</div>
 					</div>
 				<?php } elseif($projeto->getStatusNumero() != 4){ ?>
-					<?php if($projeto->getStatusNumero() == 1){ ?>
-						<h2>Em votação:</h2>
-					<?php }elseif($projeto->getStatusNumero() == 2){ ?>
-						<h2>Aprovado:</h2>
-					<?php }elseif($projeto->getStatusNumero() == 3){ ?>
-						<h2>Reprovado:</h2>
-					<?php }elseif($projeto->getStatusNumero() == 5){ ?>
-						<h2>Empate:</h2>
-					<?php } ?>
 					<div class="votos">
 						<div class="row">
 							<div class="col-md-6">
@@ -94,13 +85,6 @@
 			<?php } ?>
 		<?php }else{ ?>
 			<?php if($projeto->getStatusNumero() != 0 && $projeto->getStatusNumero() != 4 && $projeto->getStatusNumero() != 5){ ?>
-				<?php if($projeto->getStatusNumero() == 1){ ?>
-					<h2>Em votação:</h2>
-				<?php }elseif($projeto->getStatusNumero() == 2){ ?>
-					<h2>Aprovado:</h2>
-				<?php }elseif($projeto->getStatusNumero() == 3){ ?>
-					<h2>Reprovado:</h2>
-				<?php } ?>
 				<div class="votos">
 					<div class="row">
 						<div class="col-md-6">
@@ -122,7 +106,7 @@
 		<div class="comentarios">
 			<div class="comentar">
 				<div class="topoComentario">
-					<h2 class="quantidadeComentarios"><?= $projeto->getQuantidadeComentarios(); ?> comentário (s)</h2>
+					<h2 class="quantidadeComentarios"><span id="numeroQuantidadeComentarios"><?= $projeto->getQuantidadeComentarios(); ?></span> comentário (s)</h2>
 					<div class="parteDireita">
 						<?php if(!$logado){ ?>
 							<a href="<?= URL_RAIZ . 'login' ?>">Entrar</a>

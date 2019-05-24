@@ -37,12 +37,19 @@ class ProjetoControlador extends Controlador
 	{
 		$logado = $this->estaLogado();
 		$paginacao = $_POST['paginacao'];
+		$url = $_POST['url'];
 
 		if($logado){
 			$idPaisSessao = $this->getIdPaisSessao();
 			$projetos = Projeto::buscarProjetosDoPaisPaginacao($idPaisSessao, $paginacao);
 		}else{
-			$projetos = Projeto::buscarProjetosPaginacao($paginacao);
+			if(strpos($url, 'pais')){
+				$arrayUrl = explode('/', $url);
+				$paisUrl = $arrayUrl[count($arrayUrl) - 1];
+				$projetos = Projeto::buscarProjetosDoPaisPaginacao($paisUrl, $paginacao);
+			}else{
+				$projetos = Projeto::buscarProjetosPaginacao($paginacao);
+			}
 		}
 
 		echo json_encode($projetos);
@@ -52,12 +59,19 @@ class ProjetoControlador extends Controlador
 	{
 		$logado = $this->estaLogado();
 		$palavraChave = $_POST['palavraChave'];
+		$url = $_POST['url'];
 
 		if($logado){
 			$idPaisSessao = $this->getIdPaisSessao();
 			$projetos = Projeto::buscarProjetosDoPaisPalavraChave($idPaisSessao, $palavraChave);
 		}else{
-			$projetos = Projeto::buscarProjetosPalavraChave($palavraChave);
+			if(strpos($url, 'pais')){
+				$arrayUrl = explode('/', $url);
+				$paisUrl = $arrayUrl[count($arrayUrl) - 1];
+				$projetos = Projeto::buscarProjetosDoPaisPalavraChave($paisUrl, $palavraChave);
+			}else{
+				$projetos = Projeto::buscarProjetosPalavraChave($palavraChave);
+			}
 		}
 
 		echo json_encode($projetos);
@@ -67,12 +81,19 @@ class ProjetoControlador extends Controlador
 	{
 		$logado = $this->estaLogado();
 		$filtro = $_POST['filtro'];
+		$url = $_POST['url'];
 
 		if($logado){
 			$idPaisSessao = $this->getIdPaisSessao();
 			$projetos = Projeto::filtarProjetosDoPais($idPaisSessao, $filtro);
 		}else{
-			$projetos = Projeto::filtrarProjetos($filtro);
+			if(strpos($url, 'pais')){
+				$arrayUrl = explode('/', $url);
+				$paisUrl = $arrayUrl[count($arrayUrl) - 1];
+				$projetos = Projeto::filtarProjetosDoPais($paisUrl, $filtro);
+			}else{
+				$projetos = Projeto::filtrarProjetos($filtro);
+			}
 		}
 
 		echo json_encode($projetos);
@@ -280,6 +301,5 @@ class ProjetoControlador extends Controlador
 				}
 			}
 		}
-		
 	}
 }

@@ -52,7 +52,7 @@ $(document).ready(function(){
 						}else{
 							Swal.fire({
 								type: 'error',
-								title: 'Oops...',
+								title: resposta.type,
 								text: resposta.frase
 							});
 						}

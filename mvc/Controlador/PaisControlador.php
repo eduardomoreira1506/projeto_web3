@@ -81,7 +81,7 @@ class PaisControlador extends Controlador
 			$resposta = ['type' => 'error', 'frase' => 'Esse país já existe']; 
 		}elseif($logado){
 			$resposta = ['type' => 'error', 'frase' => 'Você não pode estar logado para criar países']; 
-		}elseif($nomePais == null || $nomePais == '' || $sigla == null || $sigla == '' || $bandeira == null || $bandeira == '' || $nomePresidente == null || $nomePresidente == '' || $email == null || $email == '' || $senha == null || $senha == '' || $confirmacaoSenha == '' || $confirmacaoSenha == null){
+		}elseif($nomePais == null || $nomePais == '' || $sigla == null || $sigla == '' || $nomePresidente == null || $nomePresidente == '' || $email == null || $email == '' || $senha == null || $senha == '' || $confirmacaoSenha == '' || $confirmacaoSenha == null){
 			$resposta = ['type' => 'error', 'frase' => 'Todos campos são obrigatórios']; 
 		}elseif($senha != $confirmacaoSenha){
 			$resposta = ['type' => 'error', 'frase' => 'Senha e confirmação de senha são diferentes']; 

@@ -146,7 +146,7 @@ class ProjetoControlador extends Controlador
 		$logado = $this->estaLogado();
 
 		if($logado){
-			if($titulo == null || $titulo == '' || $imagem == null || $imagem == '' || $descricao == null || $descricao == ''){
+			if($titulo == null || $titulo == '' || $descricao == null || $descricao == ''){
 				$resposta = ['type' => 'error', 'frase' => 'Todos campos são obrigatórios'];
 			}elseif(strlen($titulo) < 4 || strlen($titulo) > 254){
 				$resposta = ['type' => 'error', 'frase' => 'Título do projeto precisa ter de 4 a 255 caracteres'];
@@ -175,10 +175,10 @@ class ProjetoControlador extends Controlador
 				$resposta = ['type' => 'success', 'frase' => 'Projeto criado com sucesso'];
 			}
 
-			echo json_encode($resposta);
 		}else{
-			$this->redirecionar(URL_RAIZ);
+			$resposta = ['type' => 'error', 'frase' => 'Você precisa estar logado para criar projetos'];
 		}
+		echo json_encode($resposta);
 	}
 
 	public function projeto($idProjeto)
@@ -275,7 +275,6 @@ class ProjetoControlador extends Controlador
 
 			if($tipo){
 				$resposta = ['status' => false, 'frase' => 'Apenas presidentes podem colocar o projeto em votação!'];
-				echo json_encode($resposta);
 			}else{
 				$projeto = Projeto::buscarProjeto($idProjeto);
 
@@ -289,17 +288,22 @@ class ProjetoControlador extends Controlador
 							$palavra = "Reprovado";
 						}
 
-						$resposta = ['status' => true, 'frase' => 'Projeto em fase de votação!', 'titulo' => $palavra];
-						echo json_encode($resposta);
+						if($status == 1){
+							$resposta = ['status' => true, 'frase' => 'Projeto em fase de votação!', 'titulo' => $palavra];
+						}else{
+							$resposta = ['status' => true, 'frase' => 'Projeto rejeitado', 'titulo' => $palavra];
+						}
 					}else{
 						$resposta = ['status' => false, 'frase' => 'Presidentes não podem votar nos projetos!'];
-						echo json_encode($resposta);
 					}
 				}else{
 					$resposta = ['status' => false, 'frase' => 'Você só pode aprovar ou reprovar projetos do seu!'];
-					echo json_encode($resposta);
 				}
 			}
+		}else{
+			$resposta = ['status' => false, 'frase' => 'Você precisa estar logado'];
 		}
+
+		echo json_encode($resposta);
 	}
 }

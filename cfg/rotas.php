@@ -29,7 +29,7 @@ $rotas = [
         'GET' => '\Controlador\ProjetoControlador#filtrarPais'
     ],
     '/painel' => [
-        'GET' => '\Controlador\Controlador#painel'
+        'GET' => '\Controlador\PainelControlador#painel'
     ],
     '/novoDeputado' => [
         'GET' => '\Controlador\PessoaControlador#novoDeputado',

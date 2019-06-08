@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <link href="<?= URL_CSS . 'geral.css' ?>" rel="stylesheet">
     <script>
-    	let baseUrl = '<?= URL_RAIZ ?>';
+    	const baseUrl = '<?= URL_RAIZ ?>';
     </script>
 </head>
 <body id="alturaTela">
@@ -22,7 +22,11 @@
              <a href="<?= URL_RAIZ ?>"><h1>Votações</h1></a>
          </div>
          <div class="paiMenu">
-            <?php if($logado){ ?>
+            <?php 
+
+            $logado = $this->estaLogado();
+            
+            if($logado){ ?>
                 <a href="<?= URL_RAIZ . 'painel' ?>">Painel</a>
                 <a href="<?= URL_RAIZ . 'sair' ?>">Sair</a>
             <?php }else{ ?>

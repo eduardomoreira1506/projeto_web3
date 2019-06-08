@@ -4,7 +4,7 @@
 			<h2>Novo projeto</h2>
 		</div>
 		<div class="formulario">
-			<form id="formulario-novo-projeto">
+			<form id="formulario-novo-projeto" enctype="multipart/form-data" method="post" action="<?= URL_RAIZ . 'novoProjeto' ?>">
 				<input type="text" placeholder="titulo do projeto" id="titulo" name="titulo">
 				<input type="file" id="imagem" name="imagem">
 				<textarea id="descricao" name="descricao" id="descricao"></textarea>

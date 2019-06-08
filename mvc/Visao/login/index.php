@@ -9,7 +9,7 @@
 		</div>
 		<div class="col-md-4 tamanhoTotal">
 			<div class="formulario">
-				<form id="formulario-login">
+				<form id="formulario-login" method="post" action="<?= URL_RAIZ . 'login' ?>">
 					<input type="text" placeholder="email" id="email">
 					<input type="password" placeholder="senha" id="senha">
 					<button type="submit">Entrar</button>

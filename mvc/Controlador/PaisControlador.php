@@ -3,12 +3,13 @@ namespace Controlador;
 
 use \Modelo\Pais;
 use \Modelo\Presidente;
+use \Framework\DW3Sessao;
 
 class PaisControlador extends Controlador
 {
 	public function index()
 	{
-		$logado = $this->estaLogado();
+		$logado = DW3Sessao::get('logado');
 
 		if($logado){
 			$this->redirecionar(URL_RAIZ . 'projetos');
@@ -19,7 +20,6 @@ class PaisControlador extends Controlador
 			$informacoes = [
 				'scripts' => [],
 				'paises' => $paises,
-				'logado' => $logado,
 			];
 
 			$this->visao('paises/index.php', $informacoes);
@@ -28,14 +28,13 @@ class PaisControlador extends Controlador
 
 	public function novoPais()
 	{
-		$logado = $this->estaLogado();
+		$logado = DW3Sessao::get('logado');
 
 		if($logado){
 			$this->redirecionar(URL_RAIZ . 'projetos');
 		}else{
 			$informacoes = [
 				'scripts' => ['novo-pais'],
-				'logado' => $logado,
 			];
 
 			$this->visao('paises/novo-pais.php', $informacoes);
@@ -74,13 +73,11 @@ class PaisControlador extends Controlador
 		$confirmacaoSenha = $_POST['confirmacao_senha'];
 
 		$verificacao = Pais::paisExiste($nomePais, $sigla);
-		$logado = $this->estaLogado();
+		$this->verificarLogin();
 
 
 		if($verificacao){
 			$resposta = ['type' => 'error', 'frase' => 'Esse país já existe']; 
-		}elseif($logado){
-			$resposta = ['type' => 'error', 'frase' => 'Você não pode estar logado para criar países']; 
 		}elseif($nomePais == null || $nomePais == '' || $sigla == null || $sigla == '' || $nomePresidente == null || $nomePresidente == '' || $email == null || $email == '' || $senha == null || $senha == '' || $confirmacaoSenha == '' || $confirmacaoSenha == null){
 			$resposta = ['type' => 'error', 'frase' => 'Todos campos são obrigatórios']; 
 		}elseif($senha != $confirmacaoSenha){

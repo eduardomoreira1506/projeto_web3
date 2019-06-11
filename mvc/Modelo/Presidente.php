@@ -41,16 +41,22 @@ class Presidente extends Pessoa
         DW3BancoDeDados::getPdo()->commit();
     }
 
-    public function pegarInformacoes()
+    public function buscarPresidentePeloId($idPresidente)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PRESIDENTE);
-        $sql->bindValue(1, $this->idPresidente, PDO::PARAM_INT);
+        $sql->bindValue(1, $idPresidente, PDO::PARAM_INT);
         $sql->execute();
         $registro = $sql->fetch();
 
-        $this->setNome($registro['nome']);
-        $this->setEmail($registro['email']);
-        $this->setIdPais($registro['id_pais']);
+        $presidente = new Presidente(
+            $registro['nome'],
+            $registro['email'],
+            null,
+            $registro['id_pais'],
+            $registro['id_presidente']
+        );
+
+        return $presidente;
     }   
 
     public function buscarPresidente($email)

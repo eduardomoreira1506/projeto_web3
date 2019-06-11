@@ -33,70 +33,26 @@ class ProjetoControlador extends Controlador
 		$this->visao('projetos/index.php', $informacoes);
 	}
 
-	public function paginacao()
-	{
-		$logado = DW3Sessao::get('logado');
-		$paginacao = $_POST['paginacao'];
-		$url = $_POST['url'];
-
-		if($logado){
-			$idPaisSessao = $this->getIdPaisSessao();
-			$projetos = Projeto::buscarProjetosDoPaisPaginacao($idPaisSessao, $paginacao);
-		}else{
-			if(strpos($url, 'pais')){
-				$arrayUrl = explode('/', $url);
-				$paisUrl = $arrayUrl[count($arrayUrl) - 1];
-				$projetos = Projeto::buscarProjetosDoPaisPaginacao($paisUrl, $paginacao);
-			}else{
-				$projetos = Projeto::buscarProjetosPaginacao($paginacao);
-			}
-		}
-
-		echo json_encode($projetos);
-	}
-
-	public function buscar()
+	public function busca()
 	{
 		$logado = DW3Sessao::get('logado');
 		$palavraChave = $_POST['palavraChave'];
 		$url = $_POST['url'];
-
-		if($logado){
-			$idPaisSessao = $this->getIdPaisSessao();
-			$projetos = Projeto::buscarProjetosDoPaisPalavraChave($idPaisSessao, $palavraChave);
-		}else{
-			if(strpos($url, 'pais')){
-				$arrayUrl = explode('/', $url);
-				$paisUrl = $arrayUrl[count($arrayUrl) - 1];
-				$projetos = Projeto::buscarProjetosDoPaisPalavraChave($paisUrl, $palavraChave);
-			}else{
-				$projetos = Projeto::buscarProjetosPalavraChave($palavraChave);
-			}
-		}
-
-		echo json_encode($projetos);
-	}
-
-	public function filtrar()
-	{
-		$logado = DW3Sessao::get('logado');
 		$filtro = $_POST['filtro'];
-		$url = $_POST['url'];
+		$paginacao = $_POST['paginacao'];
 
 		if($logado){
 			$idPaisSessao = $this->getIdPaisSessao();
-			$projetos = Projeto::filtarProjetosDoPais($idPaisSessao, $filtro);
+			$projetos = Projeto::buscaProjetosPais($idPaisSessao, $palavraChave, $filtro, $paginacao);
 		}else{
 			if(strpos($url, 'pais')){
 				$arrayUrl = explode('/', $url);
 				$paisUrl = $arrayUrl[count($arrayUrl) - 1];
-				$projetos = Projeto::filtarProjetosDoPais($paisUrl, $filtro);
+				$projetos = Projeto::buscaProjetosPais($paisUrl, $palavraChave, $filtro, $paginacao);
 			}else{
-				$projetos = Projeto::filtrarProjetos($filtro);
+				$projetos = Projeto::buscaProjetos($palavraChave, $filtro, $paginacao);
 			}
 		}
-
-		echo json_encode($projetos);
 	}
 
 	public function filtrarPais($idPais)

@@ -15,10 +15,4 @@ abstract class Modelo extends DW3Modelo
 		$this->tabela = $tabela;
 	}
 
-	protected function buscarTodos()
-	{
-		$sql = 'SELECT * FROM ' . $this->tabela;
-        $registros = DW3BancoDeDados::query($sql);
-        return $registros;
-	}
 }

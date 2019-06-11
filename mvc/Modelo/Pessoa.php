@@ -84,7 +84,7 @@ class Pessoa extends Modelo
         }
     }
 
-    public function fazerLogin($email)
+    public static function fazerLogin($email)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PRESIDENTES_POR_EMAIL);
         $sql->bindValue(1, $email, PDO::PARAM_STR);

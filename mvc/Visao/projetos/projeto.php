@@ -1,3 +1,4 @@
+<?php $logado = $this->estaLogado(); ?>
 <div class="container">
 	<section class="noticia">
 		<div class="titulo">

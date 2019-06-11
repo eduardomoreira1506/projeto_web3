@@ -9,6 +9,7 @@ class Pais extends Modelo
 {
     const VERIFICACAO_PAIS = 'SELECT id_pais FROM paises WHERE nome = ? OR sigla = ?';
     const INSERIR = 'INSERT INTO paises(nome,sigla) VALUES (?, ?)';
+    const BUSCAR_TODOS = "SELECT * FROM paises ORDER BY id_pais DESC";
 
     private $idPais;
     private $nome;
@@ -55,7 +56,10 @@ class Pais extends Modelo
 
     public function buscarTodosPaises()
     {
-        $registros = $this->buscarTodos();
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        $sql->execute();
+        $registros = $sql->fetchAll();
+
         $objetos = [];
         foreach ($registros as $registro) {
             $objetos[] = new Pais(

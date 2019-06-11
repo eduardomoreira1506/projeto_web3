@@ -5,22 +5,14 @@ use \PDO;
 use \Framework\DW3BancoDeDados;
 use \Framework\DW3ImagemUpload;
 
-class Projeto extends Modelo
+class Projeto extends Modelo 
 {
-    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT 10";
-    const BUSCAR_TODOS_PAGINACAO_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC LIMIT ? , 10";
-    const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos ORDER BY id_projeto DESC LIMIT 10";
-    const BUSCAR_TODOS_PAGINACAO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos ORDER BY id_projeto DESC LIMIT ? , 10";
+    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? AND status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10"; 
+    const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10"; 
     const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 1) as votos_aprovados,(SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 0) as votos_reprovados,(SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
-    const BUSCAR_PROJETOS_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status = ? ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_PAIS_FILTRO= "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status = ? AND id_pais = ? ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_PAIS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_SEM_FILTRO = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos ORDER BY id_projeto DESC";
-    const BUSCAR_PROJETOS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%' ORDER BY id_projeto DESC";
     const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao,id_presidente) VALUES (?, ?,?, ?,?)';
     const ATUALIZAR = 'UPDATE projetos SET status = ? WHERE id_projeto = ?';
     const BUSCAR_VOTO = 'SELECT COUNT(id_voto) as voto FROM deputados JOIN votos USING (id_deputado) WHERE id_projeto = ? AND email = ?';
-    const BUSCAR_PROJETOS_PAIS_PALAVRA_CHAVE = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') AND id_pais = ? ORDER BY id_projeto DESC";
 
     private $idProjeto;
     private $idDeputado;
@@ -168,7 +160,7 @@ class Projeto extends Modelo
         return $this->quantidadeComentarios;
     }
 
-    public function buscarProjeto($idProjeto)
+    public static function buscarProjeto($idProjeto)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETO_PELO_ID);
         $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
@@ -209,7 +201,10 @@ class Projeto extends Modelo
     public function buscarTodosProjetos()
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
-        $sql->bindValue(1, $this->idPais, PDO::PARAM_INT);
+        $sql->bindValue(1, '', PDO::PARAM_STR);
+        $sql->bindValue(2, '', PDO::PARAM_STR);
+        $sql->bindValue(3, '', PDO::PARAM_STR);
+        $sql->bindValue(4, 0, PDO::PARAM_INT);
         $sql->execute();
         $registros = $sql->fetchAll();
         $objetos = [];
@@ -248,6 +243,10 @@ class Projeto extends Modelo
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_DO_PAIS);
         $sql->bindValue(1, $this->idPais, PDO::PARAM_INT);
+        $sql->bindValue(2, '', PDO::PARAM_STR); 
+        $sql->bindValue(3, '', PDO::PARAM_STR);
+        $sql->bindValue(4, '', PDO::PARAM_STR);
+        $sql->bindValue(5, 0, PDO::PARAM_INT);
         $sql->execute();
         $registros = $sql->fetchAll();
         $objetos = [];
@@ -282,66 +281,26 @@ class Projeto extends Modelo
         return $objetos;
     }
 
-    public function buscarProjetosPaginacao($paginacao)
+    public function buscaProjetosPais($idPais, $palavraChave, $filtro, $paginacao)
     {
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_PAGINACAO);
-        $sql->bindValue(1, floatval($paginacao), PDO::PARAM_INT);
-        $sql->execute();
-        $registros = $sql->fetchAll();
-        return $registros;
-    }
-
-    public function buscarProjetosDoPaisPaginacao($idPais, $paginacao)
-    {
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_PAGINACAO_DO_PAIS);
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_DO_PAIS);
         $sql->bindValue(1, $idPais, PDO::PARAM_INT);
-        $sql->bindValue(2, floatval($paginacao), PDO::PARAM_INT);
+        $sql->bindValue(2, $filtro, PDO::PARAM_STR); 
+        $sql->bindValue(3, $palavraChave, PDO::PARAM_STR);
+        $sql->bindValue(4, $palavraChave, PDO::PARAM_STR);
+        $sql->bindValue(5, $paginacao, PDO::PARAM_INT);
         $sql->execute();
         $registros = $sql->fetchAll();
         return $registros;
     }
 
-    public function filtarProjetosDoPais($idPais, $filtro){
-        if($filtro == null || $filtro == ""){
-            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_SEM_FILTRO);
-            $sql->bindValue(1, $idPais, PDO::PARAM_INT);
-        }else{
-            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_FILTRO);
-            $sql->bindValue(1, $filtro, PDO::PARAM_STR);
-            $sql->bindValue(2, $idPais, PDO::PARAM_INT);
-        }
-        $sql->execute();
-        $registros = $sql->fetchAll();
-        return $registros;
-    }
-
-    public function buscarProjetosDoPaisPalavraChave($idPais, $palavraChave){
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PAIS_PALAVRA_CHAVE);
-        $sql->bindValue(1, $palavraChave, PDO::PARAM_STR);
-        $sql->bindValue(2, $palavraChave, PDO::PARAM_STR);
-        $sql->bindValue(3, $idPais, PDO::PARAM_INT);
-        $sql->execute();
-        $registros = $sql->fetchAll();
-        return $registros;
-    }
-
-    public function filtrarProjetos($filtro){
-        if($filtro == null || $filtro == ""){
-            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_SEM_FILTRO);
-        }else{
-            $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_FILTRO);
-            $sql->bindValue(1, $filtro, PDO::PARAM_STR);
-        }
-        $sql->execute();
-        $registros = $sql->fetchAll();
-        return $registros;
-    }
-
-    public function buscarProjetosPalavraChave($palavraChave)
+    public function buscaProjetos($palavraChave, $filtro, $paginacao)
     {
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETOS_PALAVRA_CHAVE);
-        $sql->bindValue(1, $palavraChave, PDO::PARAM_STR);
-        $sql->bindValue(2, $palavraChave, PDO::PARAM_STR);
+         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        $sql->bindValue(1, $filtro, PDO::PARAM_STR);
+        $sql->bindValue(2, $palavraChave, PDO::PARAM_STR); 
+        $sql->bindValue(3, $palavraChave, PDO::PARAM_STR);
+        $sql->bindValue(4, $paginacao, PDO::PARAM_INT);
         $sql->execute();
         $registros = $sql->fetchAll();
         return $registros;

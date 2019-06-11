@@ -45,16 +45,22 @@ class Deputado extends Pessoa
         DW3BancoDeDados::getPdo()->commit();
     }
 
-    public function pegarInformacoes()
+    public static function buscarDeputadoPeloId($idDeputado)
     {
        $sql = DW3BancoDeDados::prepare(self::BUSCAR_DEPUTADO);
-       $sql->bindValue(1, $this->idDeputado, PDO::PARAM_INT);
+       $sql->bindValue(1, $idDeputado, PDO::PARAM_INT);
        $sql->execute();
        $registro = $sql->fetch();
 
-       $this->setNome($registro['nome']);
-       $this->setEmail($registro['email']);
-       $this->setIdPais($registro['id_pais']);
+       $deputado = new Deputado(
+            $registro['nome'],
+            $registro['email'],
+            null,
+            $registro['id_pais'],
+            $idDeputado
+       );
+
+       return $deputado;
     }
     
     public function buscarDeputado($email)

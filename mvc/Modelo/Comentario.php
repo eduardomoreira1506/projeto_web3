@@ -36,7 +36,7 @@ class Comentario extends Modelo
         return $this->comentario;
     }
 
-    public function buscarComentarios($idProjeto)
+    public static function buscarComentarios($idProjeto)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_PELO_PROJETO);
         $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
@@ -46,13 +46,9 @@ class Comentario extends Modelo
 
         foreach ($registros as $registro) {
             if($registro['id_deputado'] != null && $registro['id_deputado'] != ""){
-                $pessoa = new Deputado();
-                $pessoa->setIdDeputado($registro['id_deputado']);
-                $pessoa->pegarInformacoes();
+                $pessoa = Deputado::buscarDeputadoPeloId($registro['id_deputado']);
             }else{
-                $pessoa = new Presidente() ;
-                $pessoa->setIdPresidente($registro['id_presidente']);
-                $pessoa->pegarInformacoes();
+                $pessoa = Presidente::buscarPresidente($registro['id_presidente']);
             }
 
             $comentario = new Comentario(

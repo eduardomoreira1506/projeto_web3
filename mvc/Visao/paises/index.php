@@ -19,7 +19,7 @@
 				</div>
 			</ul>
 		</div>
-		<a href="<?= URL_RAIZ . 'novoPais' ?>" class="link-novo-pais">Cadastrar novo país</a>
+		<a href="<?= URL_RAIZ . 'pais' ?>" class="link-novo-pais">Cadastrar novo país</a>
 		<a href="<?= URL_RAIZ . 'projetos' ?>" class="link-novo-pais">Ver de todos países</a>
 	</section>
 </div>

@@ -7,7 +7,7 @@ use \Modelo\Pessoa;
 class PainelControlador extends Controlador
 {
 
-    public function painel()
+    public function index()
     {
         $this->verificarLogin();
         $tipoSessao = $this->getTipoSessao();

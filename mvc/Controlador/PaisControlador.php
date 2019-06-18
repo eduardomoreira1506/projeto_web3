@@ -26,7 +26,7 @@ class PaisControlador extends Controlador
 		}
 	}
 
-	public function novoPais()
+	public function criar()
 	{
 		$logado = DW3Sessao::get('logado');
 
@@ -62,7 +62,7 @@ class PaisControlador extends Controlador
 		}
 	}
 
-	public function criarNovoPais()
+	public function armazenar()
 	{
 		$nomePais = $_POST['nome-pais'];
 		$sigla = $_POST['sigla'];

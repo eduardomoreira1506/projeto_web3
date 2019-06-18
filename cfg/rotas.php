@@ -4,57 +4,57 @@ $rotas = [
     '/' => [
         'GET' => '\Controlador\PaisControlador#index'
     ],
-    '/novoPais' => [
-    	'GET' => '\Controlador\PaisControlador#novoPais',
-    	'POST' => '\Controlador\PaisControlador#criarNovoPais'
-    ],
-    '/verificacaoNovoPais' => [
-    	'POST' => '\Controlador\PaisControlador#verificarPaisExiste'
+    '/pais' => [
+    	'GET' => '\Controlador\PaisControlador#criar',
+    	'POST' => '\Controlador\PaisControlador#armazenar'
     ],
     '/login' => [
-        'GET' => '\Controlador\PessoaControlador#login',
-        'POST' => '\Controlador\PessoaControlador#fazerLogin'
-    ],
-    '/verificacaoEmail' => [
-        'POST' => '\Controlador\PessoaControlador#verificarEmailExiste'
+        'GET' => '\Controlador\PessoaControlador#index',
+        'POST' => '\Controlador\PessoaControlador#armazenar'
     ],
     '/projetos' => [
         'GET' => '\Controlador\ProjetoControlador#index',
         'POST' => '\Controlador\ProjetoControlador#paginacao'
     ],
     '/sair' => [
-        'GET' => '\Controlador\PessoaControlador#logoff'
+        'GET' => '\Controlador\PessoaControlador#destruir'
     ],
     '/pais/?' => [
         'GET' => '\Controlador\ProjetoControlador#filtrarPais'
     ],
     '/painel' => [
-        'GET' => '\Controlador\PainelControlador#painel'
+        'GET' => '\Controlador\PainelControlador#index'
     ],
     '/novoDeputado' => [
-        'GET' => '\Controlador\PessoaControlador#novoDeputado',
-        'POST' => '\Controlador\PessoaControlador#cadastrarNovoDeputado'
-    ],
-    '/verificacaoEmailNaoExiste' => [
-        'POST' => '\Controlador\PessoaControlador#verificacaoEmailNaoExiste'
+        'GET' => '\Controlador\DeputadoControlador#index',
+        'POST' => '\Controlador\PessoaControlador#armazenar'
     ],
     '/novoProjeto' => [
         'GET' => '\Controlador\ProjetoControlador#novoProjeto',
-        'POST' => '\Controlador\ProjetoControlador#criarNovoProjeto'
+        'POST' => '\Controlador\ProjetoControlador#armazenar'
     ],
     '/projeto/?' => [
         'GET' => '\Controlador\ProjetoControlador#projeto',
     ],
     '/comentario' => [
-        'POST' => '\Controlador\ProjetoControlador#comentar',
+        'POST' => '\Controlador\ComentarioControlador#armazenar',
+    ],
+    '/votar' => [
+        'POST' => '\Controlador\VotoControlador#armazenar'
+    ],
+    '/busca' => [
+        'POST' => '\Controlador\ProjetoControlador#busca'
     ],
     '/alterarStatusProjeto' => [
         'POST' => '\Controlador\ProjetoControlador#alterarStatusProjeto'
     ],
-    '/votar' => [
-        'POST' => '\Controlador\PessoaControlador#votar'
+    '/verificacaoEmail' => [
+        'POST' => '\Controlador\PessoaControlador#verificarEmailExiste'
     ],
-    '/busca' => [
-        'POST' => '\Controlador\ProjetoControlador#busca'
+    '/verificacaoEmailNaoExiste' => [
+        'POST' => '\Controlador\PessoaControlador#verificacaoEmailNaoExiste'
+    ],
+    '/verificacaoNovoPais' => [
+        'POST' => '\Controlador\PaisControlador#verificarPaisExiste'
     ],
 ];

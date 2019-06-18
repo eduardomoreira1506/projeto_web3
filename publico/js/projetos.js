@@ -1,23 +1,25 @@
 $(document).ready(function(){
-	var paginacao = 10;
+	var paginacaoGlobal = 10;
 	var url = window.location.href;
 	url = url.toString();
 
 	$(window).bind('scroll', function() {
 		if($('#filtro-projetos').val() == ""){
 			if(($(window).innerHeight() + $(window).scrollTop()) >= $("body").height() - 1){
-				busca(paginacao, $('#busca').val(), $('#filtro-projetos').val(), url);
+				busca(paginacaoGlobal, $('#busca').val(), $('#filtro-projetos').val(), url);
+				paginacaoGlobal += 10;
 			}
 		}
 	});	
 
 	$('#filtro-projetos').change(function(){
+		paginacaoGlobal = 0;
 		busca(0 , $('#busca').val(), this.value, url)
-	})
+	});
 
 	$('#busca').keyup(function(){
 		busca(0, this.value, $('#filtro-projetos').val(), url);
-	})
+	});
 })
 
 const busca = (paginacao, palavraChave, filtro, url) => {
@@ -27,7 +29,13 @@ const busca = (paginacao, palavraChave, filtro, url) => {
 		data: {paginacao, palavraChave, filtro, url},
 		success: function(respostaJson){
 			var resposta = JSON.parse(respostaJson);
-			var html = '';
+
+			if(paginacao != 0){
+				var html = $('#listaProjetos').html();
+			}else{
+				var html = '';
+			}
+			
 
 			for(i in resposta){
 				var diferencaEmMinutos = resposta[i].diferenca_em_minutos;
@@ -48,7 +56,7 @@ const busca = (paginacao, palavraChave, filtro, url) => {
 				<div class="row destaque">
 				<div class="col-md-9 destaque">
 				<h2>${resposta[i].titulo}</h2>
-				<h3>${diferenca}</h3>
+				<h3>${diferenca} | ${validarStatus(resposta[i].status)}</h3>
 				<p>${resposta[i].descricao.substring(0,200)}</p>
 				</div>
 				<div class="col-md-3 destaque">
@@ -64,4 +72,16 @@ const busca = (paginacao, palavraChave, filtro, url) => {
 			$('#listaProjetos').html(html);
 		}
 	});
+}
+
+const validarStatus = numeroStatus => {
+	numeroStatus = parseInt(numeroStatus);
+	switch(numeroStatus){
+		case 0: return "Aguardando aprovação do presidente";
+		case 1: return "Em votação";
+		case 2: return "Aprovado";
+		case 3: return "Reprovado";
+		case 4: return "Reprovado pelo presidente";
+		case 5: return "Empatado";
+	}
 }

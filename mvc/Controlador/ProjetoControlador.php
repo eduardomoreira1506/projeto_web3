@@ -16,13 +16,9 @@ class ProjetoControlador extends Controlador
 
 		if($logado){
 			$idPais = $this->getIdPaisSessao();
-			$projeto = new Projeto();
-			$projeto->setIdPais($idPais);
-
-			$projetos = $projeto->buscarTodosProjetosDoPais();
+			$projetos = Projeto::buscarTodosProjetosDoPais($idPais);
 		}else{
-			$projeto = new Projeto();
-			$projetos = $projeto->buscarTodosProjetos();
+			$projetos = Projeto::buscarTodosProjetos();
 		}
 
 		$informacoes = [
@@ -53,19 +49,18 @@ class ProjetoControlador extends Controlador
 				$projetos = Projeto::buscaProjetos($palavraChave, $filtro, $paginacao);
 			}
 		}
+
+		echo json_encode($projetos);
 	}
 
 	public function filtrarPais($idPais)
 	{
-		$logado =DW3Sessao::get('logado');
+		$logado = DW3Sessao::get('logado');
 		
 		if($logado){
 			$this->redirecionar(URL_RAIZ);
 		}else{
-			$projeto = new Projeto();
-			$projeto->setIdPais($idPais);
-
-			$projetos = $projeto->buscarTodosProjetosDoPais();
+			$projetos = Projeto::buscarTodosProjetosDoPais($idPais);
 
 			$informacoes = [
 				'scripts' => ['projetos'],
@@ -91,7 +86,7 @@ class ProjetoControlador extends Controlador
 		}
 	}
 
-	public function criarNovoProjeto()
+	public function armazenar()
 	{
 		$titulo = $_POST['titulo'];
 		$imagem = array_key_exists('imagem', $_FILES) ? $_FILES['imagem'] : null;
@@ -167,45 +162,6 @@ class ProjetoControlador extends Controlador
 			];
 
 			$this->visao('projetos/projeto.php', $informacoes);
-		}
-	}
-
-	public function comentar()
-	{
-		$comentario = $_POST['comentario'];
-		$idProjeto = $_POST['idProjeto'];
-
-		$logado = $this->estaLogado();
-
-		if($logado){
-			if(strlen($comentario) > 255){
-				$resposta = ['status' => false, 'frase' => 'Comentário deve ter no máximo 255 caracteres!'];
-			}else{
-				$idPaisSessao = $this->getIdPaisSessao();
-				$projeto = Projeto::buscarProjeto($idProjeto);
-				$idPais = $projeto->getIdPais();
-
-				if($idPaisSessao == $idPais){
-					$tipo = $this->getTipoSessao();
-					$email = $this->getEmailSessao();
-					if($tipo){
-						$deputado = Deputado::buscarDeputado($email);
-						$deputado->comentar($idProjeto, $comentario);
-					}else{
-						$presidente = Presidente::buscarPresidente($email);
-						$presidente->comentar($idProjeto, $comentario);
-					}
-
-					$resposta = ['status' => true, 'nome' => $this->getNomeSessao()];
-				}else{
-					$resposta = ['status' => false, 'frase' => 'Você só pode comentar em projetos do seu país!'];
-				}	
-			}
-
-			echo json_encode($resposta);
-		}else{
-			$resposta = ['status' => false, 'frase' => 'Você precisa estar logado para poder comentar!'];
-			echo json_encode($resposta);
 		}
 	}
 

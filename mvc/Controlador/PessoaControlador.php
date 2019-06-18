@@ -8,7 +8,7 @@ use \Framework\DW3Sessao;
 
 class PessoaControlador extends Controlador
 {
-	public function login()
+	public function index()
 	{
 		$logado = DW3Sessao::get('logado');
 
@@ -24,7 +24,7 @@ class PessoaControlador extends Controlador
 		}
 	}
 
-	public function logoff()
+	public function destruir()
 	{
 		DW3Sessao::deletar('logado');
 		DW3Sessao::deletar('idPais');
@@ -72,7 +72,7 @@ class PessoaControlador extends Controlador
 		}
 	}
 
-	public function fazerLogin()
+	public function armazenar()
 	{
 		$verificacao = DW3Sessao::get('logado');
 		$senha = $_POST['senha'];
@@ -101,106 +101,5 @@ class PessoaControlador extends Controlador
 				}
 			}
 		}
-	}
-
-	public function novoDeputado()
-	{
-		$this->verificarLogin();
-
-		$tipoSessao = $this->getTipoSessao();
-
-		if(!$tipoSessao){
-			$informacoes = [
-				'scripts' => ['novo-deputado'],
-				'logado' => $logado,
-			];
-
-			$this->visao('deputados/novo-deputado.php', $informacoes);
-		}else{
-			$this->redirecionar(URL_RAIZ);
-		}
-	}
-
-	public function cadastrarNovoDeputado()
-	{
-		$this->verificarLogin();
-
-		$tipoSessao = $this->getTipoSessao();
-
-		if(!$tipoSessao){
-			$nome = $_POST['nome'];
-			$email = $_POST['email'];
-			$senha = $_POST['senha'];
-
-			if($nome == null || $nome == "" || $email == null || $email == "" || $senha == null || $senha == ""){
-				$resposta = ['status' => false, 'frase' => 'Todos campos são obrigatórios.'];
-			}else{
-				$verificacao = Pessoa::pessoaExiste($email);
-
-				if($verificacao){
-					$resposta = ['status' => false, 'frase' => 'Esse e-mail já está cadastrado no sistema.'];
-				}else{
-					$idPais = $this->getIdPaisSessao();
-					$deputado = new Deputado($nome, $email, $senha, $idPais);
-					$deputado->inserir();
-
-					$nome = explode(" ", $nome);
-					$nome = $nome[0];
-					$resposta = ['status' => true, 'frase' => "Deputado $nome cadastrado!"];
-				}
-			}
-		}else{
-			$resposta = ['status' => false, 'frase' => "Deputados não podem cadastrar outros deputados!"];
-		}
-		
-		echo json_encode($resposta);
-	}
-
-	public function votar()
-	{
-		$voto = $_POST['voto'];
-		$idProjeto = $_POST['idProjeto'];
-		$this->verificarLogin();
-
-		if($voto != 1 && $voto != 0){
-			$resposta = ['status' => false, 'frase' => "As opções de voto são deferir ou indeferir!"];
-		}else{
-			$idPaisSessao = $this->getIdPaisSessao();
-			$tipo = $this->getTipoSessao();
-
-			if($tipo){
-				$email = $this->getEmailSessao();
-				$verificacaoVoto = Projeto::getVotosDeputadoProjeto($idProjeto, $email);
-				if($verificacaoVoto){
-					$resposta = ['status' => false, 'frase' => "Você já votou nesse projeto! Uma vez votado, não pode ser alterado"];
-				}else{
-					$projeto = Projeto::buscarProjeto($idProjeto);
-
-					if($projeto->getIdPais() == $idPaisSessao){
-						$registroDeputado = Deputado::getDeputado($email);
-						$deputado = new Deputado(
-							$registroDeputado['nome'],
-							$registroDeputado['email'],
-							null,
-							$registroDeputado['id_pais'],
-							$registroDeputado['id_deputado']
-						);
-
-						$retornoVoto = $deputado->votar($voto, $idProjeto);
-						if($retornoVoto != false){
-							$resposta = ['status' => true, 'frase' => "Você foi o último voto desse projeto e ele acaba de ser $retornoVoto"];
-						}else{
-							$resposta = ['status' => true, 'frase' => "Seu voto foi contabilizado"];
-						}
-					}else{
-						$resposta = ['status' => false, 'frase' => "Você só pode votar em projetos do seu país!"];
-					}
-				}
-			}else{
-				$resposta = ['status' => false, 'frase' => "Apenas deputados podem votar!"];
-			}
-		}
-
-		echo json_encode($resposta);
 	}
 }

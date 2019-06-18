@@ -18,7 +18,7 @@
 						<div class="row destaque">
 							<div class="col-md-9 destaque">
 								<h2><?= $projeto->getTitulo() ?></h2>
-								<h3><?= $projeto->getTempoFormatado() ?>
+								<h3><?= $projeto->getTempoFormatado() ?> | <?= $projeto->getStatus() ?>
 								<?php if(!$logado){ ?>
 									<img src="<?= URL_IMG . 'bandeiras/' . $projeto->getIdPais() . '.png' ?>" alt="">
 								<?php } ?>

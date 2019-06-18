@@ -7,7 +7,7 @@ use \Framework\DW3ImagemUpload;
 
 class Projeto extends Modelo 
 {
-    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? AND status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10"; 
+    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? AND status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10";
     const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10"; 
     const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 1) as votos_aprovados,(SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 0) as votos_reprovados,(SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
     const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao,id_presidente) VALUES (?, ?,?, ?,?)';
@@ -57,26 +57,6 @@ class Projeto extends Modelo
         $this->votosReprovados = $votosReprovados;
         $this->idPresidente = $idPresidente;
         parent::__construct('projetos');
-    }
-
-    public function setTempoFormatado($tempoFormatado)
-    {
-        $this->tempoFormatado = $tempoFormatado;
-    }
-
-    public function setPais($pais)
-    {
-        $this->pais = $pais;
-    }
-
-    public function setIdPais($idPais)
-    {
-        $this->idPais = $idPais;
-    }
-
-    public function setQuantidadeComentarios($quantidadeComentarios)
-    {
-        $this->quantidadeComentarios = $quantidadeComentarios;
     }
 
     public function getVotosAprovados()
@@ -160,6 +140,28 @@ class Projeto extends Modelo
         return $this->quantidadeComentarios;
     }
 
+    public function setTempoFormatado($tempoFormatado)
+    {
+        $this->tempoFormatado = $tempoFormatado;
+    }
+
+    public function inserir()
+    {
+        DW3BancoDeDados::getPdo()->beginTransaction();
+        $sql = DW3BancoDeDados::prepare(self::INSERIR);
+        $sql->bindValue(1, $this->idDeputado, PDO::PARAM_INT);
+        $sql->bindValue(2, $this->idPais, PDO::PARAM_INT);
+        $sql->bindValue(3, $this->titulo, PDO::PARAM_STR);
+        $sql->bindValue(4, $this->descricao, PDO::PARAM_STR);
+        $sql->bindValue(5, $this->idPresidente, PDO::PARAM_INT);
+        $sql->execute();
+        $this->idProjeto = DW3BancoDeDados::getPdo()->lastInsertId();
+        DW3BancoDeDados::getPdo()->commit();
+
+        $caminhoCompleto = PASTA_PUBLICO . "img/projetos/{$this->idProjeto}.png";
+        DW3ImagemUpload::salvar($this->imagem, $caminhoCompleto);
+    }
+
     public static function buscarProjeto($idProjeto)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_PROJETO_PELO_ID);
@@ -198,7 +200,49 @@ class Projeto extends Modelo
         return $projeto;
     }
 
-    public function buscarTodosProjetos()
+    public static function buscarTodosProjetosDoPais($idPais)
+    {
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_DO_PAIS);
+        $sql->bindValue(1, $idPais, PDO::PARAM_INT);
+        $sql->bindValue(2, '', PDO::PARAM_STR); 
+        $sql->bindValue(3, '', PDO::PARAM_STR);
+        $sql->bindValue(4, '', PDO::PARAM_STR);
+        $sql->bindValue(5, 0, PDO::PARAM_INT);
+        $sql->execute();
+        $registros = $sql->fetchAll();
+        $objetos = [];
+
+        foreach ($registros as $registro) {
+            $projeto = new Projeto(
+                $registro['id_projeto'],
+                $registro['id_deputado'],
+                $registro['id_pais'],
+                $registro['data_criacao'],
+                $registro['status'],
+                $registro['titulo'],
+                $registro['descricao'],
+                null,
+                $registro['data_resultado']
+            );
+
+            $diferencaEmMinutos = $registro['diferenca_em_minutos'];
+            if($diferencaEmMinutos < 60){
+                $projeto->setTempoFormatado("$diferencaEmMinutos minuto(s) atrás");
+            }elseif($diferencaEmMinutos < 1440){
+                $diferencaEmHoras = round($diferencaEmMinutos / 60);
+                $projeto->setTempoFormatado("$diferencaEmHoras hora(s) atrás");
+            }else{
+                $diferencaEmDias = round($diferencaEmMinutos / 1440);
+                $projeto->setTempoFormatado("$diferencaEmDias dia(s) atrás");
+            }
+
+            $objetos[] = $projeto;
+        }
+
+        return $objetos;
+    }
+
+    public static function buscarTodosProjetos()
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
         $sql->bindValue(1, '', PDO::PARAM_STR);
@@ -239,49 +283,26 @@ class Projeto extends Modelo
         return $objetos;
     }
 
-    public function buscarTodosProjetosDoPais()
+    public static function atualizar($status, $idProjeto)
     {
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_DO_PAIS);
-        $sql->bindValue(1, $this->idPais, PDO::PARAM_INT);
-        $sql->bindValue(2, '', PDO::PARAM_STR); 
-        $sql->bindValue(3, '', PDO::PARAM_STR);
-        $sql->bindValue(4, '', PDO::PARAM_STR);
-        $sql->bindValue(5, 0, PDO::PARAM_INT);
-        $sql->execute();
-        $registros = $sql->fetchAll();
-        $objetos = [];
-
-        foreach ($registros as $registro) {
-            $projeto = new Projeto(
-                $registro['id_projeto'],
-                $registro['id_deputado'],
-                $registro['id_pais'],
-                $registro['data_criacao'],
-                $registro['status'],
-                $registro['titulo'],
-                $registro['descricao'],
-                null,
-                $registro['data_resultado']
-            );
-
-            $diferencaEmMinutos = $registro['diferenca_em_minutos'];
-            if($diferencaEmMinutos < 60){
-                $projeto->setTempoFormatado("$diferencaEmMinutos minuto(s) atrás");
-            }elseif($diferencaEmMinutos < 1440){
-                $diferencaEmHoras = round($diferencaEmMinutos / 60);
-                $projeto->setTempoFormatado("$diferencaEmHoras hora(s) atrás");
-            }else{
-                $diferencaEmDias = round($diferencaEmMinutos / 1440);
-                $projeto->setTempoFormatado("$diferencaEmDias dia(s) atrás");
-            }
-
-            $objetos[] = $projeto;
-        }
-
-        return $objetos;
+        $comando = DW3BancoDeDados::prepare(self::ATUALIZAR);
+        $comando->bindValue(1, $status, PDO::PARAM_STR);
+        $comando->bindValue(2, $idProjeto, PDO::PARAM_INT);
+        $comando->execute();
     }
 
-    public function buscaProjetosPais($idPais, $palavraChave, $filtro, $paginacao)
+    public static function getVotosDeputadoProjeto($idProjeto, $email)
+    {
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_VOTO);
+        $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
+        $sql->bindValue(2, $email, PDO::PARAM_STR);
+        $sql->execute();
+        $registro = $sql->fetch();
+
+        return $registro['voto'];
+    }
+
+    public static function buscaProjetosPais($idPais, $palavraChave, $filtro, $paginacao)
     {
         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_DO_PAIS);
         $sql->bindValue(1, $idPais, PDO::PARAM_INT);
@@ -294,9 +315,9 @@ class Projeto extends Modelo
         return $registros;
     }
 
-    public function buscaProjetos($palavraChave, $filtro, $paginacao)
+    public static function buscaProjetos($palavraChave, $filtro, $paginacao)
     {
-         $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        $sql = DW3BancoDeDados::prepare(self::BUSCAR_TODOS); 
         $sql->bindValue(1, $filtro, PDO::PARAM_STR);
         $sql->bindValue(2, $palavraChave, PDO::PARAM_STR); 
         $sql->bindValue(3, $palavraChave, PDO::PARAM_STR);
@@ -304,42 +325,6 @@ class Projeto extends Modelo
         $sql->execute();
         $registros = $sql->fetchAll();
         return $registros;
-    }
-
-    public function inserir()
-    {
-        DW3BancoDeDados::getPdo()->beginTransaction();
-        $sql = DW3BancoDeDados::prepare(self::INSERIR);
-        $sql->bindValue(1, $this->idDeputado, PDO::PARAM_INT);
-        $sql->bindValue(2, $this->idPais, PDO::PARAM_INT);
-        $sql->bindValue(3, $this->titulo, PDO::PARAM_STR);
-        $sql->bindValue(4, $this->descricao, PDO::PARAM_STR);
-        $sql->bindValue(5, $this->idPresidente, PDO::PARAM_INT);
-        $sql->execute();
-        $this->idProjeto = DW3BancoDeDados::getPdo()->lastInsertId();
-        DW3BancoDeDados::getPdo()->commit();
-
-        $caminhoCompleto = PASTA_PUBLICO . "img/projetos/{$this->idProjeto}.png";
-        DW3ImagemUpload::salvar($this->imagem, $caminhoCompleto);
-    }
-
-    public function atualizar($status, $idProjeto)
-    {
-        $comando = DW3BancoDeDados::prepare(self::ATUALIZAR);
-        $comando->bindValue(1, $status, PDO::PARAM_STR);
-        $comando->bindValue(2, $idProjeto, PDO::PARAM_INT);
-        $comando->execute();
-    }
-
-    public function getVotosDeputadoProjeto($idProjeto, $email)
-    {
-        $sql = DW3BancoDeDados::prepare(self::BUSCAR_VOTO);
-        $sql->bindValue(1, $idProjeto, PDO::PARAM_INT);
-        $sql->bindValue(2, $email, PDO::PARAM_STR);
-        $sql->execute();
-        $registro = $sql->fetch();
-
-        return $registro['voto'];
     }
 
 }

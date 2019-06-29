@@ -29,7 +29,7 @@ $(document).ready(function(){
 		var formData = new FormData(formulario);
 
 		$.ajax({
-			url: `${baseUrl}novoProjeto`,
+			url: `${baseUrl}projeto`,
 			type: 'POST',
 			data: formData,
 			dataType: 'json',

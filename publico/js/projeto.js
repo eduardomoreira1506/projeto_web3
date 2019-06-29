@@ -111,7 +111,9 @@ $(document).ready(function(){
 						type: 'success',
 						title: resposta.titulo,
 						text: resposta.frase
-					});
+					}).then(() => {
+						location.reload()
+					})
 
 					var quantidadeVotosAtuais = $('#quantidade-votos-deferidos').html();
 					quantidadeVotosAtuais = parseInt(quantidadeVotosAtuais);
@@ -141,7 +143,9 @@ $(document).ready(function(){
 						type: 'success',
 						title: resposta.titulo,
 						text: resposta.frase
-					});
+					}).then(() => {
+						location.reload()
+					})
 
 					var quantidadeVotosAtuais = $('#quantidade-votos-indeferidos').html();
 					quantidadeVotosAtuais = parseInt(quantidadeVotosAtuais);

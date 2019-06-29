@@ -29,7 +29,7 @@ $(document).ready(function(){
 		var senha = $('#senha').val();
 
 		$.ajax({
-			url: `${baseUrl}novoDeputado`,
+			url: `${baseUrl}deputado`,
 			method: 'POST',
 			data: {nome: nome, email: email, senha: senha},
 			success: function(respostaJson){

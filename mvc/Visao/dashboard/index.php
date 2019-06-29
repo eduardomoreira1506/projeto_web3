@@ -6,14 +6,14 @@
 		</div>
 		<div class="opcoes row">
 			<?php if(!$tipo){ ?>
-				<a href="novoDeputado">
+				<a href="deputado">
 					<div>
 						<i class="fas fa-plus-square"></i>
 						<h4>Criar novo Deputado</h4>
 					</div>
 				</a>
 			<?php } ?>
-			<a href="novoProjeto">
+			<a href="projeto">
 				<div>
 					<i class="fas fa-project-diagram"></i>
 					<h4>Criar novo Projeto</h4>

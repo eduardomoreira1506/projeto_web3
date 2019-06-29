@@ -10,7 +10,7 @@ class DeputadoControlador extends PessoaControlador
 {
     public function index()
     {
-        $this->verificarLogin();
+        $logado = $this->verificarLogin();
 
         $tipoSessao = $this->getTipoSessao();
 

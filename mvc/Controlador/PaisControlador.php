@@ -73,7 +73,7 @@ class PaisControlador extends Controlador
 		$confirmacaoSenha = $_POST['confirmacao_senha'];
 
 		$verificacao = Pais::paisExiste($nomePais, $sigla);
-		$this->verificarLogin();
+		$this->estaLogado();
 
 
 		if($verificacao){

@@ -7,7 +7,7 @@ use \Framework\DW3ImagemUpload;
 
 class Projeto extends Modelo 
 {
-    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? AND status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10";
+    const BUSCAR_TODOS_DO_PAIS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE id_pais = ? AND status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ?, 10";
     const BUSCAR_TODOS = "SELECT id_projeto,id_deputado,id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y') AS data_resultado, TIMESTAMPDIFF(MINUTE, data_criacao, NOW()) AS diferenca_em_minutos FROM projetos WHERE status LIKE '%' ? '%' AND (titulo LIKE '%' ? '%' OR descricao LIKE '%' ? '%') ORDER BY id_projeto DESC LIMIT ? , 10"; 
     const BUSCAR_PROJETO_PELO_ID = "SELECT (SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 1) as votos_aprovados,(SELECT COUNT(id_voto) FROM votos WHERE id_projeto = ? AND aprovado = 0) as votos_reprovados,(SELECT COUNT(id_comentario) FROM comentarios WHERE id_projeto = ?) as comentarios, presidentes.nome as nomePresidente, paises.nome as nomePais, paises.sigla ,projetos.id_projeto,projetos.id_deputado,projetos.id_pais, DATE_FORMAT(data_criacao,'%d/%m/%Y %H:%i:%s') AS data_criacao, status, titulo, descricao, DATE_FORMAT(data_resultado,'%d/%m/%Y %H:%i:%s') AS data_resultado FROM projetos JOIN paises USING (id_pais) JOIN presidentes USING (id_pais) WHERE id_projeto = ?";
     const INSERIR = 'INSERT INTO projetos(id_deputado,id_pais,titulo,descricao,id_presidente) VALUES (?, ?,?, ?,?)';
@@ -143,6 +143,16 @@ class Projeto extends Modelo
     public function setTempoFormatado($tempoFormatado)
     {
         $this->tempoFormatado = $tempoFormatado;
+    }
+
+    public function setQuantidadeComentarios($quantidadeComentarios)
+    {
+        $this->quantidadeComentarios = $quantidadeComentarios;
+    }
+
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
     }
 
     public function inserir()
@@ -309,7 +319,7 @@ class Projeto extends Modelo
         $sql->bindValue(2, $filtro, PDO::PARAM_STR); 
         $sql->bindValue(3, $palavraChave, PDO::PARAM_STR);
         $sql->bindValue(4, $palavraChave, PDO::PARAM_STR);
-        $sql->bindValue(5, $paginacao, PDO::PARAM_INT);
+        $sql->bindValue(5, intval($paginacao), PDO::PARAM_INT);
         $sql->execute();
         $registros = $sql->fetchAll();
         return $registros;
@@ -321,7 +331,7 @@ class Projeto extends Modelo
         $sql->bindValue(1, $filtro, PDO::PARAM_STR);
         $sql->bindValue(2, $palavraChave, PDO::PARAM_STR); 
         $sql->bindValue(3, $palavraChave, PDO::PARAM_STR);
-        $sql->bindValue(4, $paginacao, PDO::PARAM_INT);
+        $sql->bindValue(4, intval($paginacao), PDO::PARAM_INT);
         $sql->execute();
         $registros = $sql->fetchAll();
         return $registros;

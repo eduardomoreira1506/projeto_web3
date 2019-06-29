@@ -25,11 +25,11 @@ $rotas = [
     '/painel' => [
         'GET' => '\Controlador\PainelControlador#index'
     ],
-    '/novoDeputado' => [
+    '/deputado' => [
         'GET' => '\Controlador\DeputadoControlador#index',
-        'POST' => '\Controlador\PessoaControlador#armazenar'
+        'POST' => '\Controlador\DeputadoControlador#armazenar'
     ],
-    '/novoProjeto' => [
+    '/projeto' => [
         'GET' => '\Controlador\ProjetoControlador#novoProjeto',
         'POST' => '\Controlador\ProjetoControlador#armazenar'
     ],

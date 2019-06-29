@@ -3,7 +3,7 @@
 		<div class="texto">
 			<h2>Novo deputado</h2>
 		</div>
-		<div class="formulario" method="post" action="<?= URL_RAIZ . 'novoDeputado' ?>">
+		<div class="formulario" method="post" action="<?= URL_RAIZ . 'deputado' ?>">
 			<form id="formulario-novo-deputado">
 				<input type="text" placeholder="nome" name="nome" id="nome">
 				<input type="email" placeholder="email" name="email" id="email">

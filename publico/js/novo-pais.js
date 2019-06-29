@@ -26,12 +26,12 @@ $(document).ready(function(){
 					method: 'POST',
 					data: {nomePais: nomePais, sigla: sigla},
 					success: function(respostaJson){
-						var resposta = JSON.parse(respostaJson);
-						if(resposta.status){
+						var respostaJson = JSON.parse(respostaJson)
+						if(respostaJson.status){
 							Swal.fire({
 								type: 'success',
 								title: 'Sucesso',
-								text: resposta.frase
+								text: respostaJson.frase
 							}).then(() => {
 								document.getElementById("nome-pais").readOnly = true;
 								document.getElementById("sigla").readOnly = true;
@@ -52,8 +52,8 @@ $(document).ready(function(){
 						}else{
 							Swal.fire({
 								type: 'error',
-								title: resposta.type,
-								text: resposta.frase
+								title: respostaJson.type,
+								text: respostaJson.frase
 							});
 						}
 					}
@@ -64,19 +64,12 @@ $(document).ready(function(){
 
 	$('#formulario-novo-pais').submit(function(e){
 		if($('#verificacao-pais').html() == undefined){
-			var nomePais = $('#nome-pais').val();
-			var sigla = $('#sigla').val();
-			var imagem = $('#bandeira-imagem').val();
-			var nome = $('#nome').val();
-			var email = $('#email').val();
-			var senha = $('#senha').val();
-
 			e.preventDefault();
 			var formulario = document.getElementById('formulario-novo-pais');
 			var formData = new FormData(formulario);
 
 			$.ajax({
-				url: `${baseUrl}novoPais`,
+				url: `${baseUrl}pais`,
 				type: 'POST',
 				data: formData,
 				dataType: 'json',
